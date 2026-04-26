@@ -20,7 +20,11 @@ class MainServicesEngine extends Engine {
         {
             name: "mail service nodemailer email provider configuration",
             priority: 'low',
-            initFunc: async () => {if(NODE_ENV == 'development') return MailManager.InitializeNodeMailer()}
+            initFunc: async () => {
+                if(NODE_ENV != 'development') return
+
+                await MailManager.InitializeNodeMailer()
+            }
         },
         {
             name: 'cache service configuration',
@@ -29,7 +33,7 @@ class MainServicesEngine extends Engine {
         },
         {
             name: "storage service configuration",
-            priority: 'low',
+            priority: 'top',
             initFunc: async () => FIleStorageService.InitializeManager()
         },
         {

@@ -7,14 +7,14 @@ import { execFile } from "child_process";
 
 config()
 
-const {FFMPEG_LOCAL_PATH, FFMPEG_LOCAL_PROBE_PATH} = process.env
+const {FFMPEG_LOCAL_PATH, FFMPEG_LOCAL_PROBE_PATH, NODE_ENV} = process.env
 
 class FFMPEGManager {
     private logger = new Logger("ffmpeg-logs")
 
-    private ffmpegPath = FFMPEG_LOCAL_PATH ?? ffmpegInstaller.path
+    private ffmpegPath = NODE_ENV == "development" ? FFMPEG_LOCAL_PATH : ffmpegInstaller.path
 
-    private probePath = FFMPEG_LOCAL_PROBE_PATH ?? ffprobeInstaller.path
+    private probePath = NODE_ENV == "development" ? FFMPEG_LOCAL_PROBE_PATH : ffprobeInstaller.path
 
     get FFMPEG () {
         return ffmpeg

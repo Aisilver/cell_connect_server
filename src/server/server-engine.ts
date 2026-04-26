@@ -54,7 +54,19 @@ const ENVSchema = Joi.object<NodeJS.ProcessEnv>({
 
     SUPABASE_KEY: Joi.string().required(),
 
-    STORAGE_FOLDERS: Joi.string().required()
+    STORAGE_FOLDERS: Joi.string().required(),
+
+    FFMPEG_LOCAL_PATH: Joi.alternatives().conditional("NODE_ENV", {
+        is: "development",
+        then: Joi.string().required(),
+        otherwise: Joi.string().optional()
+    }),
+
+    FFMPEG_LOCAL_PROBE_PATH: Joi.alternatives().conditional("NODE_ENV", {
+        is: "development",
+        then: Joi.string().required(),
+        otherwise: Joi.string().optional()
+    })
 }).unknown(true)
 
 class ServerEngineMain extends Engine {
