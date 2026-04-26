@@ -29,7 +29,7 @@ class MainServicesEngine extends Engine {
         },
         {
             name: "storage service configuration",
-            priority: 'top',
+            priority: 'low',
             initFunc: async () => FIleStorageService.InitializeManager()
         },
         {

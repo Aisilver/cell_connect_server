@@ -48,6 +48,12 @@ const ENVSchema = Joi.object<NodeJS.ProcessEnv>({
 
     REDIS_URL: Joi.string().required(),
 
+    SUPABASE_URL: Joi.string().required(),
+
+    SUPABASE_BUCKET: Joi.string().required(),
+
+    SUPABASE_KEY: Joi.string().required(),
+
     STORAGE_FOLDERS: Joi.string().required()
 }).unknown(true)
 

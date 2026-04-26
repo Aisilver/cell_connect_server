@@ -17,17 +17,7 @@ export class SupaBaseStorageManager implements StorageManager {
     private bucketName!: string
 
     async InitializeStorage(): Promise<void> {
-        const {SUPABASE_URL, SUPABASE_BUCKET, SUPABASE_KEY, STORAGE_FOLDERS} = process.env,
-
-        valObject = Joi.object({
-            SUPABASE_URL: Joi.string().required(),
-            SUPABASE_BUCKET: Joi.string().required(),
-            SUPABASE_KEY: Joi.string().required()
-        }).unknown(true),
-
-        {error} = valObject.validate(process.env)
-
-        if(error) throw Error(error.message)
+        const {SUPABASE_URL, SUPABASE_BUCKET, SUPABASE_KEY, STORAGE_FOLDERS} = process.env
 
         this.bucketName = SUPABASE_BUCKET
 
