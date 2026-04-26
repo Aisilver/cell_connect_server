@@ -16,9 +16,9 @@ const ENVSchema = Joi.object<NodeJS.ProcessEnv>({
 
     SERVER_DOMAIN_URL: Joi.string().required(),
 
-    ACCESS_SECRET_KEY: Joi.string().required(),
+    ACCESS_TOKEN_SECRET_KEY: Joi.string().required(),
 
-    REFRESH_SECRET_KEY: Joi.string().required(),
+    REFRESH_TOKEN_SECRET_KEY: Joi.string().required(),
 
     REFRESH_TOKEN_COOKIE_NAME: Joi.string().required(),
     

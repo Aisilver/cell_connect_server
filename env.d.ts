@@ -13,9 +13,9 @@ declare global {
 
             SERVER_DOMAIN_URL: string;
 
-            ACCESS_SECRET_KEY: string;
+            ACCESS_TOKEN_SECRET_KEY: string;
 
-            REFRESH_SECRET_KEY: string;
+            REFRESH_TOKEN_SECRET_KEY: string;
 
             REFRESH_TOKEN_COOKIE_NAME: string;
             

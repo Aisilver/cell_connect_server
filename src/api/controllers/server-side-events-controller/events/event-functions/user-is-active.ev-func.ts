@@ -1,4 +1,4 @@
-import { AccountEntityNotificationManager } from "../../../../../entites-notification-handlers/account-notifications/account-entity.notification-handler";
+import { AccountEntityNotificationManager } from "../../../../../notification-handlers/account-notifications/account-entity.notification-handler";
 import { ServerMainService } from "../../../../../services/server.service";
 import { ClientAcvtivityEntryData } from "../../types";
 
