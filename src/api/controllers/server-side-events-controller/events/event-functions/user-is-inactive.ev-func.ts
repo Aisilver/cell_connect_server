@@ -1,0 +1,1 @@
+export async function SSE_CTRL_EV_userIsInactive (accountId: number) {}

@@ -1,0 +1,1 @@
+export type StorageFolderTypes = "image" | "audio" | "text"

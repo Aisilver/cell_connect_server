@@ -1,0 +1,12 @@
+[
+    {
+        "disabled": false,
+        "default": true,
+        "slug": "cell_meeting"
+    },
+    {
+        "disabled": false,
+        "default": true,
+        "slug": "bible_study"
+    }
+]
