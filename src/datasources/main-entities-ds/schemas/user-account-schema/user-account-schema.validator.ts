@@ -18,8 +18,6 @@ export class UserAccountEntitySchemaValidator extends SchemaValidator <UserAccou
         suspended: Joi.boolean().required(),
             
         createdAt: Joi.date().optional(),
-
-        lastUsed: Joi.boolean().required(),
         
         updatedAt: Joi.date().optional(),
         
