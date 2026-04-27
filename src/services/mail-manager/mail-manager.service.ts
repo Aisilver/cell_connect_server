@@ -14,16 +14,6 @@ export class MailManagerService  {
         this.NodeMailer.close()
     }
 
-    getFromAdreess (opt?: {name?: string, sender?: string}, email_service: "resend" | "nodemailer" = "resend") {
-        const {MAIN_DOMAIN_ORIGIN, GMAIL_USER} = process.env
-
-        if(email_service == 'resend')
-            return `${opt?.name ? opt.name + ' ' : ''}<${opt?.sender ?? 'noreply'}@${MAIN_DOMAIN_ORIGIN}>`
-        else 
-            return `${opt?.name ? opt.name + ' ' : ''} <${opt?.sender ?? 'noreply'}@${GMAIL_USER}>`
-    }
-
-
     async InitializeNodeMailer(){
         const {GMAIL_HOST,GMAIL_PORT,GMAIL_PASS,GMAIL_USER} = process.env,
 
