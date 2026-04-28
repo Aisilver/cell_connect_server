@@ -6,7 +6,7 @@ import { List } from "@shared/entities";
 
 const { CityRepo } = MiscellaneousEntitiesRepoManagerService
 
-export async function APP_R_Init_prepareAndCacheCities () {
+export async function APP_R_Init_prepareAndCacheDefaultCities () {
     let citiesToCache: List[]
     
     const defaultCities = await JSONsManagerService.getDefaultCites(),
