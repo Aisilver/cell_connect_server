@@ -1,4 +1,4 @@
-import { List } from "@shared/entities";
+import { List, ListTypes } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
 
@@ -11,6 +11,8 @@ import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
     }
 })
 export class BaseListEntity extends BaseEntity implements List {
+    declare type?: ListTypes;
+
     @Column()
     declare slug: string
 
@@ -24,5 +26,5 @@ export class BaseListEntity extends BaseEntity implements List {
 @ChildEntity('cities')
 export class CityEntity extends BaseListEntity {}
 
-@ChildEntity('app-meeting-types')
+@ChildEntity('meeting-types')
 export class AppMeetingTypesEntity extends BaseListEntity {}

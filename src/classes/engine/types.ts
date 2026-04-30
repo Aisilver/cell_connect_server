@@ -1,4 +1,4 @@
-export type EngineInitalizerFunctionsPriorityTypes = "top" | "low"
+export type EngineInitalizerFunctionsPriorityTypes = "top" | "low" | "ignore"
 
 export type InitializerConfig = {
     name: string,

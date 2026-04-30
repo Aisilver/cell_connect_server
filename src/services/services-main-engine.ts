@@ -19,7 +19,7 @@ class MainServicesEngine extends Engine {
         },
         {
             name: "mail service nodemailer email provider configuration",
-            priority: 'low',
+            priority: 'ignore',
             initFunc: async () => {
                 if(NODE_ENV != 'development') return
 

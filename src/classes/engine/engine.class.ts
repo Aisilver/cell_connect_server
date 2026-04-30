@@ -40,6 +40,11 @@ export abstract class Engine {
         for (const initConfig of this.initializers ?? []) {
             const {name, priority} = initConfig
 
+            if(priority == 'ignore') {
+                this.logger.warn(`Skipped Execution of [${name}] intialization process`)
+                continue;
+            };
+
             try {
                 this.logger.info(`Executing [${name}] intialization process`)
 

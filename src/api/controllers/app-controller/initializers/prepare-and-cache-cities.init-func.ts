@@ -13,28 +13,24 @@ export async function APP_R_Init_prepareAndCacheDefaultCities () {
 
     {CITIES_CACHE_COLLECTION} = AppCTRLCacheManager,
 
-    numberOfDefaultCitiesInDB = await CityRepo.count(
+    [citiesInDb, numberOfDefaultCitiesInDB] = await CityRepo.findAndCount(
         {
             where: {
                 default: Equal(true)
+            },
+            order: {
+                slug: "ASC"
             }
         }
     )
 
-    if(numberOfDefaultCitiesInDB < defaultCities.length){
-        await CityRepo.clear()
+    if(numberOfDefaultCitiesInDB != defaultCities.length){
+        await CityRepo.delete({type: "cities"})
 
-        await CityRepo.save(defaultCities)
+        citiesToCache = await CityRepo.save(defaultCities.sort((a, b) => a.slug.localeCompare(b.slug)))
 
-        citiesToCache = defaultCities.sort((a, b) => a.slug.localeCompare(b.slug))
     }else {
-        citiesToCache = await CityRepo.find(
-            {
-                order: {
-                    slug: "ASC"
-                }
-            }
-        )
+        citiesToCache = citiesInDb
     }
 
     await CITIES_CACHE_COLLECTION.set(citiesToCache)

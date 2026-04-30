@@ -13,8 +13,7 @@ import { UserEntity } from "../user-schema/user.schema";
     }
 })
 export class AccountBaseEntity extends BaseEntity implements AccountBase {
-    @Column({insert: false, update: false, nullable: true})
-    type?: AccountType;
+    declare type?: AccountType;
     
     @Column()
     declare banned: boolean;

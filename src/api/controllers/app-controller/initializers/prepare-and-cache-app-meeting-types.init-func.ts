@@ -16,8 +16,8 @@ export async function APP_R_Init_prepareAndCacheDefaultAppMeetingTypes () {
         }
     )
     
-    if(defaultMeetingTypes.length > numberOfrows) {
-        await MeetingTypesRepo.clear()
+    if(defaultMeetingTypes.length != numberOfrows) {
+        await MeetingTypesRepo.delete({type: Equal('meeting-types')})
 
         await MeetingTypesRepo.save(defaultMeetingTypes)
 

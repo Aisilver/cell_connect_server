@@ -12,6 +12,7 @@ import { MeetingAgendaEntity } from "./schemas/meeting-agenda-schema/meeting-age
 import { LeaderEntity } from "./schemas/leader-schema/leader.schema";
 import { MemberEntity } from "./schemas/member-schema/member.schema";
 import { AppLocationEntity } from "./schemas/app-location-schema/app-location.schema";
+import { CellEntity } from "./schemas/cell-schema/cell.schema";
 
 class MainEntitiesRepoManager extends DataSourceManager {
     
@@ -34,6 +35,8 @@ class MainEntitiesRepoManager extends DataSourceManager {
     get MeetingAgendaEntityRepo () {return this.dataSource.getRepository(MeetingAgendaEntity)}
 
     get MemberEntityRepo () {return this.dataSource.getRepository(MemberEntity)}
+
+    get CellEntityRepo () {return this.dataSource.getRepository(CellEntity)}
 
     get AppLocationEntityRepo () {return this.dataSource.getRepository(AppLocationEntity)}
 
