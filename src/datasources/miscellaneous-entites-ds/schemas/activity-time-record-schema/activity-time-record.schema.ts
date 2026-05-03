@@ -11,8 +11,8 @@ export class ActivityTimeRecordEntity extends BaseEntity implements ActivityTime
     declare entryTime: Date;
 
     @Column()
-    declare timeDifference: number
+    declare timeDifference: number;
 
     @Column()
     declare exitTime: Date;
-}
+} 

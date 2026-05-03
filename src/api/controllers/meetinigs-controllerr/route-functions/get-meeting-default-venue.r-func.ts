@@ -10,28 +10,19 @@ const { CellEntityRepo } = MainEntitiesRepoManagerService
 
 export async function MeetCTRL_RF_getMeetingDefaultVenue (req: Request, res: Response) {
     try {
-        // const {value: cellId, error} = Joi.number().not(0).required().validate(req.params['cellId'])
+        const {value: cellId, error} = Joi.number().not(0).required().validate(req.params['cellId'])
 
-        // if(error) throw error
+        if(error) throw error
 
-        // const cell = await CellEntityRepo.findOneOrFail(
-        //     {
-        //         where: {
-        //             id: Equal(cellId)
-        //         }
-        //     }
-        // )
+        const cell = await CellEntityRepo.findOneOrFail(
+            {
+                where: {
+                    id: Equal(cellId)
+                }
+            }
+        )
 
-        // res.json(APIResponse<AppLocation>(cell.address))
-
-        setTimeout(() => {
-           res.json(APIResponse<AppLocation>({
-                country: 'nigeria',
-                city: 'sangotedo',
-                state: 'lagos',
-                addressInFull: '39, miracle avenue, sangotedo, ajah, lagos.'
-            })) 
-        });
+        res.json(APIResponse<AppLocation>(cell.address))
     } catch (error: any) {
         res.json(APIFailResponse(error.message))
     }

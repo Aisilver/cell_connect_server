@@ -3,7 +3,7 @@ import EventEmitter from "events";
 import { Engine } from "../engine/engine.class";
 import http from "http"
 import { Logger } from "../logger/logger.class";
-import { CronManager } from "../cron-manager/cron-manager.class";
+import { CronTaskManager } from "../../services/cron-manager/cron-manager.class";
 import { config } from 'dotenv';
 
 config()
@@ -13,11 +13,11 @@ export class MainEngine extends EventEmitter {
 
     private logger = new Logger("MainEngine")
 
-    private cronManager = new CronManager()
-
     private Express!: any
 
     private Server!: http.Server
+
+    private cronManager = new CronTaskManager()
 
     constructor(){
         super()

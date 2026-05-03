@@ -1,15 +1,17 @@
 
-export function dateToCronExpression(date: Date){
+export function dateToCronExpression(passedDate: Date){
 
-    const minute = date.getMinutes(),
+    const date = new Date(passedDate),
     
-    hour = date.getHours(), 
+    minute = date.getUTCMinutes(),
     
-    day_of_month = date.getDate(),
+    hour = date.getUTCHours(), 
     
-    month = date.getMonth(), 
+    day_of_month = date.getUTCDate(),
     
-    day_of_week = date.getDay()
+    month = date.getUTCMonth(), 
+    
+    day_of_week = date.getUTCDay()
 
     return `${minute} ${hour} ${day_of_month} ${month} ${day_of_week}`
 }

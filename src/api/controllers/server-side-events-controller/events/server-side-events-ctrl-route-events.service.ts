@@ -16,7 +16,7 @@ class ServerSideEventControllerEventsManager extends BaseEventManager {
 
     triggerUserisActiveEvent = (data: ClientAcvtivityEntryData) => this.Trigger(this.USER_IS_ACTIVE_EVENT_KEY, data, "absolute")
     
-    triggerUserisInactiveEvent = (accountId: number) => this.Trigger(this.USER_IS_INACTIVE_EVENT_KEY, accountId, "absolute")
+    triggerUserisInactiveEvent = (data: ClientAcvtivityEntryData) => this.Trigger(this.USER_IS_INACTIVE_EVENT_KEY, data, "absolute")
 }
 
 export const ServerSideEventsCTRLEventsManager = new ServerSideEventControllerEventsManager()

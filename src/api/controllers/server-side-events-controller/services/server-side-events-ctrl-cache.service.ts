@@ -10,7 +10,7 @@ class ServerSideEventsControllerCacheService extends BaseCacheManager {
 
     protected namespace: string = "sse-cache";
 
-    readonly CLIENT_ACTIVITY_TIME_TRACKER_COLLECTION = this.Collection<ClientAcvtivityEntryData>("client-activity-time-tracker-collection", MONTH)
+    readonly CACHED_CLIENT_ACTIVITY_TIME_TRACKER_COLLECTION = this.Collection<ClientAcvtivityEntryData>("client-activity-time-tracker-collection", MONTH)
 }
 
 export const ServerSideEventsCTRLCacheManager = new ServerSideEventsControllerCacheService()

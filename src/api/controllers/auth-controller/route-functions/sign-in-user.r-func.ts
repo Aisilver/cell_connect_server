@@ -3,11 +3,10 @@ import { SignInCredentials, UserSignInResponse } from "@shared/route-types";
 import { Request, Response } from "express";
 import { APIFailResponse, APIResponse } from "../../../functions/api-response.func";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
-import { Equal, In } from "typeorm";
+import { Equal } from "typeorm";
 import { Hasher } from "../../../../classes/hasher/hasher.class";
 import { config } from "dotenv";
 import { AuthCtrlService } from "../services/auth-ctrl.service";
-import { MemberStatusTypes } from "@shared/entities";
 import { ServerMainService } from "../../../../services/server.service";
 
 config()
@@ -15,8 +14,6 @@ config()
 const {
     UserEntityRepo, 
     UserAccountEntityRepo,
-    LeaderEntityRepo,
-    MemberEntityRepo
 } = MainEntitiesRepoManagerService,
 
 credentialsValidator = Joi.object<SignInCredentials>({
@@ -56,28 +53,15 @@ export async function AuthCTRL_RF_signInUser (req: Request, res: Response) {
         accountFromDB = await UserAccountEntityRepo.findOne({
             where: {
                 user: userFoundInDB
+            },
+            relations: {
+                user: {
+                    location: true
+                }
             }
         })
 
         if(!accountFromDB) throw Error("account cannot be found")
-
-        accountFromDB.leadership = await LeaderEntityRepo.findOne(
-            {
-                where: {
-                    account: {id: accountFromDB.id},
-                    status: In<MemberStatusTypes>(['active', 'suspended'])
-                }
-            }
-        )
-
-        accountFromDB.membership = await MemberEntityRepo.find(
-            {
-                where: {
-                    account: {id: accountFromDB.id},
-                    status: In<MemberStatusTypes>(['active', 'suspended'])
-                }
-            }
-        )
         
         const accessToken = await AuthCtrlService.setResponseRefeshTokenAndGetAccessToken(res, {userId, accountId: accountFromDB.id})
 
