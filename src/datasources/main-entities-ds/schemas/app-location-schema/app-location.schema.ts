@@ -1,8 +1,14 @@
-import { Column, Entity } from "typeorm";
-import { AppLocation } from "@shared/entities";
+import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
+import { AppLocation, CellVenueLocation, UserLocation } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
-
 @Entity('location')
+@TableInheritance({
+    pattern: "STI",
+    column: {
+        name: "type",
+        type: "varchar"
+    }
+})
 export class AppLocationEntity extends BaseEntity implements AppLocation {
     @Column()
     declare state: string
@@ -12,10 +18,19 @@ export class AppLocationEntity extends BaseEntity implements AppLocation {
 
     @Column()
     declare country: string;
+}
 
-    @Column({nullable: true})
-    addressInFull?: string;
-    
+@ChildEntity("user-location")
+export class UserLocationEntity extends AppLocationEntity implements UserLocation {}
+
+@ChildEntity("cell-venue")
+export class CellVenueLocationEntity extends AppLocationEntity implements CellVenueLocation {
+    @Column()
+    declare addressInFull: string;
+
+    @Column()
+    declare landmark: string;
+
     @Column({nullable: true})
     latitude?: number;
     
@@ -24,4 +39,5 @@ export class AppLocationEntity extends BaseEntity implements AppLocation {
     
     @Column({nullable: true})
     estateName?: string;
+
 }

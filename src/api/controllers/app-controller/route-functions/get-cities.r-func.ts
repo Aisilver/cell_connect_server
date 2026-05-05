@@ -6,7 +6,7 @@ import { AppCTRLCacheManager } from "../services/app-ctrl-route-cache.service";
 import { Equal } from "typeorm";
 import { List } from "@shared/entities";
 
-const { CityRepo } = MiscellaneousEntitiesRepoManagerService
+const { CityRepo } = MiscellaneousEntitiesRepoManagerService.ListsRepoManager
 
 export async function APP_R_getCities(req: Request, res: Response) {
     try {

@@ -1,8 +1,10 @@
 import { MiscellaneousEntitiesRepoManagerService } from "../../.././../../datasources/miscellaneous-entites-ds/repos-manager";
 import { PagesCtrlCacheManager } from "../../services/pages-ctrl-cache.service";
 
-const {SlidesRepo} = MiscellaneousEntitiesRepoManagerService
+const { SlidesRepo } = MiscellaneousEntitiesRepoManagerService.SlidesRepoManager
 
 export async function Pg_EV_slidesCachingEventHandler () {
-    PagesCtrlCacheManager.storeSlides(await SlidesRepo.find())        
+    const {CACHED_SLIDES} = PagesCtrlCacheManager
+
+    await CACHED_SLIDES.set(await SlidesRepo.find())
 }

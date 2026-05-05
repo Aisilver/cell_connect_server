@@ -4,7 +4,7 @@ import { AppCTRLCacheManager } from "../services/app-ctrl-route-cache.service";
 import { List } from "@shared/entities";
 import { MiscellaneousEntitiesRepoManagerService } from "../../../../datasources/miscellaneous-entites-ds/repos-manager";
 
-const { MeetingTypesRepo } = MiscellaneousEntitiesRepoManagerService
+const { MeetingTypesRepo } = MiscellaneousEntitiesRepoManagerService.ListsRepoManager
 
 export async function APP_R_getMeetingTypes (req: Request, res: Response) {
     try {

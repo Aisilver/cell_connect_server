@@ -6,7 +6,7 @@ import { MiscellaneousEntitiesRepoManagerService } from "../../datasources/misce
 
 const { CACHED_APP_SETTINGS } = ServerMainService,
 
-{ AppSettingsRepo } = MiscellaneousEntitiesRepoManagerService
+{ AppSettingsRepo } = MiscellaneousEntitiesRepoManagerService.JSONsRepoManager
 
 export async function MainRoute_getAppSettings (req: Request, res: Response) {
     try {

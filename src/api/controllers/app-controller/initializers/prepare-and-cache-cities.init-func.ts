@@ -4,7 +4,7 @@ import { Equal } from "typeorm";
 import { AppCTRLCacheManager } from "../services/app-ctrl-route-cache.service";
 import { List } from "@shared/entities";
 
-const { CityRepo } = MiscellaneousEntitiesRepoManagerService
+const { CityRepo } = MiscellaneousEntitiesRepoManagerService.ListsRepoManager
 
 export async function APP_R_Init_prepareAndCacheDefaultCities () {
     let citiesToCache: List[]

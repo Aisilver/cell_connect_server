@@ -3,7 +3,7 @@ import { MiscellaneousEntitiesRepoManagerService } from "../../../../datasources
 import { AppCTRLCacheManager } from "../services/app-ctrl-route-cache.service";
 import { Equal } from "typeorm";
 
-const { MeetingTypesRepo } = MiscellaneousEntitiesRepoManagerService
+const { MeetingTypesRepo } = MiscellaneousEntitiesRepoManagerService.ListsRepoManager
 
 export async function APP_R_Init_prepareAndCacheDefaultAppMeetingTypes () {
     const defaultMeetingTypes = await JSONsManagerService.getDefaultMeetingTypes(),

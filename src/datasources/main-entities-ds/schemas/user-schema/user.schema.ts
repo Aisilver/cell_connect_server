@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm"
 import { User, UserStatuses } from "@shared/entities"
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { AccountBaseEntity } from "../account-base-schema/account-base.schema";
-import { AppLocationEntity } from "../app-location-schema/app-location.schema";
+import { AppLocationEntity, UserLocationEntity } from "../app-location-schema/app-location.schema";
 
 @Entity({name: "users"})
 export class UserEntity extends BaseEntity implements User {
@@ -45,11 +45,11 @@ export class UserEntity extends BaseEntity implements User {
     @OneToMany(() => AccountBaseEntity, account => account.user)
     accounts: AccountBaseEntity[]
 
-    @OneToOne(() => AppLocationEntity, {
+    @OneToOne(() => UserLocationEntity, {
         cascade: true,
         eager: true,
         onDelete: "CASCADE"
     })
     @JoinColumn()
-    declare location: AppLocationEntity;
+    declare location: UserLocationEntity;
 }

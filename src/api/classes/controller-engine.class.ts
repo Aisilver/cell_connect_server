@@ -17,6 +17,8 @@ export abstract class ControllerEngine extends Engine {
 
     protected abstract routeBaseUrl: string;
 
+    AfterRouterInitialise?(): void | Promise<void>
+
     constructor(engineName: string, opt?: Option) {
         super(engineName)
         
@@ -27,7 +29,9 @@ export abstract class ControllerEngine extends Engine {
         if(opt?.useBodyParser) this.router.use(bodyParser.json())
     }
 
-    AfterInitialise(): void | Promise<void> {
+    async AfterInitialise(): Promise<void> {
         this.app.use(`/${this.routeBaseUrl}`, this.router)
+
+        if(this.AfterRouterInitialise) await this.AfterRouterInitialise()
     }
 }

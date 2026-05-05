@@ -4,7 +4,7 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { LeaderEntity } from "../leader-schema/leader.schema";
 import { MeetingEntity } from "../meeting-schema/meeting.schema";
 import { MemberEntity } from "../member-schema/member.schema";
-import { AppLocationEntity } from "../app-location-schema/app-location.schema";
+import { AppLocationEntity, CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
 
 @Entity("cells")
 export class CellEntity extends BaseEntity implements Cell {
@@ -24,17 +24,17 @@ export class CellEntity extends BaseEntity implements Cell {
     @Column()
     declare rating: number;
 
-    @OneToOne(() => LeaderEntity, {
-        cascade: true
-    })
-    leader: LeaderEntity
-
-    @OneToOne(() => AppLocationEntity,{
+    @OneToOne(() => CellVenueLocationEntity,{
         cascade: true,
         eager: true
     })
     @JoinColumn()
-    address: AppLocationEntity;
+    declare default_venue: CellVenueLocationEntity;
+
+    @OneToOne(() => LeaderEntity, {
+        cascade: true
+    })
+    leader: LeaderEntity
 
     @OneToMany(() => MemberEntity, member => member.cell)
     members: MemberEntity[]

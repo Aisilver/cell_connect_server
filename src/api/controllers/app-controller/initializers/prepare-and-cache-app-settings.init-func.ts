@@ -4,7 +4,7 @@ import { MiscellaneousEntitiesRepoManagerService } from "../../../../datasources
 import { AppSettings } from "@shared/entities";
 import { Equal } from "typeorm";
 
-const { AppSettingsRepo } = MiscellaneousEntitiesRepoManagerService,
+const { AppSettingsRepo } = MiscellaneousEntitiesRepoManagerService.JSONsRepoManager,
 
 { CACHED_APP_SETTINGS } = ServerMainService
 

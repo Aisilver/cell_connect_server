@@ -1,6 +1,6 @@
 import { AccountBaseEntity } from "./schemas/account-base-schema/account-base.schema";
 import { AdminAccountEntity } from "./schemas/admin-account-schema/admin-account.schema";
-import { AppLocationEntity } from "./schemas/app-location-schema/app-location.schema";
+import { AppLocationEntity, CellVenueLocationEntity, UserLocationEntity } from "./schemas/app-location-schema/app-location.schema";
 import { AttendanceEntity } from "./schemas/attendance-schema/attendance.schema";
 import { CellEntity } from "./schemas/cell-schema/cell.schema";
 import { LeaderEntity } from "./schemas/leader-schema/leader.schema";
@@ -19,6 +19,8 @@ export const MainEntitiesList = [
     UserAccountEntity,
     MediaEntity,
     AppLocationEntity,
+    CellVenueLocationEntity,
+    UserLocationEntity,
     MeetingEntity,
     MeetingAgendaEntity,
     LeaderEntity,

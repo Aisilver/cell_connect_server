@@ -1,4 +1,4 @@
-import { AuthPageSlide, HomePageSlide, Slide } from "@shared/entities";
+import { AuthPageSlide, HomePageSlide, MeetingPageSlide, Slide } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
 
@@ -10,7 +10,7 @@ import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
         type: "varchar"
     }
 })
-export class SlideEntity extends BaseEntity implements Slide {
+export class SlideEntity extends BaseEntity implements Slide {    
     @Column()
     declare media_id: number;
 }
@@ -26,6 +26,15 @@ export class HomePageSlideEntity extends SlideEntity implements HomePageSlide {
 
 @ChildEntity('auth-page-slide')
 export class AuthPageSlideEntity extends SlideEntity implements AuthPageSlide {
+    @Column()
+    declare title: string;
+
+    @Column()
+    declare message: string;
+}
+
+@ChildEntity('meeting-page-slide')
+export class MeetingPageSlideEntity extends SlideEntity implements MeetingPageSlide {
     @Column()
     declare title: string;
 

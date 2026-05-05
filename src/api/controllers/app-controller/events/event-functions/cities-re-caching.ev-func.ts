@@ -2,7 +2,7 @@ import { Equal } from "typeorm";
 import { MiscellaneousEntitiesRepoManagerService } from "../../../../../datasources/miscellaneous-entites-ds/repos-manager";
 import { AppCTRLCacheManager } from "../../services/app-ctrl-route-cache.service";
 
-const { CityRepo } = MiscellaneousEntitiesRepoManagerService
+const { CityRepo } = MiscellaneousEntitiesRepoManagerService.ListsRepoManager
 
 
 export async function AppCTRL_EV_citiesReCaching () {

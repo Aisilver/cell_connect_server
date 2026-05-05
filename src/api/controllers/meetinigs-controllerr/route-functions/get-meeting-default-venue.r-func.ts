@@ -3,7 +3,7 @@ import { APIFailResponse, APIResponse } from "../../../functions/api-response.fu
 import Joi from "joi";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
 import { Equal } from "typeorm";
-import { AppLocation } from "@shared/entities";
+import { AppLocation, CellVenueLocation } from "@shared/entities";
 
 
 const { CellEntityRepo } = MainEntitiesRepoManagerService
@@ -22,7 +22,7 @@ export async function MeetCTRL_RF_getMeetingDefaultVenue (req: Request, res: Res
             }
         )
 
-        res.json(APIResponse<AppLocation>(cell.address))
+        res.json(APIResponse<CellVenueLocation>(cell.default_venue))
     } catch (error: any) {
         res.json(APIFailResponse(error.message))
     }

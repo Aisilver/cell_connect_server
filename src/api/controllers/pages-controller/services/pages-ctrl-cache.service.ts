@@ -1,4 +1,3 @@
-import { SlideEntity } from "../../../../datasources/miscellaneous-entites-ds/schemas/base-slide-schema/base-slide.schema";
 import { BaseCacheManager } from "../../../../classes/base-cache-manager/base-cache-service.class";
 import { CacheManager, RedisCacheManager } from "../../../../services/cache-manger/cache-manager.services";
 import { Slide } from "@shared/entities";
@@ -11,19 +10,7 @@ class PagesControllerCacheManager extends BaseCacheManager {
 
     protected CacheClient: RedisCacheManager = CacheManager;
 
-    private readonly SLIDES_KEY =  this.CacheClient.makeGroupedKey(this.namespace, 'slides')
-
-    async hasStoredSlides () {
-        return this.CacheClient.hasKey(this.SLIDES_KEY)
-    }
-
-    async storeSlides (slides: SlideEntity[]) {
-        await this.CacheClient.set(this.SLIDES_KEY, slides, MONTH)
-    }
-
-    async getStoredSlides () {
-        return await this.CacheClient.get<Slide[]>(this.SLIDES_KEY)
-    }
+    readonly CACHED_SLIDES = this.SingleItem<Slide[]>("app-slides", MONTH)
 }
 
 export const PagesCtrlCacheManager = new PagesControllerCacheManager()

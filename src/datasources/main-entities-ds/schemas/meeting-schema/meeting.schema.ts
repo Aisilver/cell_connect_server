@@ -6,7 +6,7 @@ import { CellEntity } from "../cell-schema/cell.schema";
 import { UserAccountEntity } from "../user-account-schema/user-account.schema";
 import { AttendanceEntity } from "../attendance-schema/attendance.schema";
 import { ReviewEntity } from "../review-schema/review.schema";
-import { AppLocationEntity } from "../app-location-schema/app-location.schema";
+import { AppLocationEntity, CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
 
 @Entity("meetings")
 export class MeetingEntity extends BaseEntity implements Meeting {
@@ -35,12 +35,12 @@ export class MeetingEntity extends BaseEntity implements Meeting {
     @JoinColumn()
     host: UserAccountEntity;
 
-    @OneToOne(() => AppLocationEntity, {
+    @OneToOne(() => CellVenueLocationEntity, {
         cascade: true,
         eager: true
     })
     @JoinColumn()
-    venue: AppLocationEntity;
+    declare venue: CellVenueLocationEntity;
 
     @OneToMany(() => MeetingAgendaEntity, agenda => agenda.meeting, {
         cascade: true
