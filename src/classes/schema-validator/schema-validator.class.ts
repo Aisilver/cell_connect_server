@@ -4,7 +4,10 @@ export abstract class SchemaValidator <Schema> {
     protected abstract schemaValObj: Joi.ObjectSchema<Schema>
     
     validate (targetSchema: Schema) {
-        return this.schemaValObj.required().validate(JSON.parse(JSON.stringify(targetSchema)))
+        return this.schemaValObj
+            .required()
+            .unknown(true)
+            .validate(JSON.parse(JSON.stringify(targetSchema)))
     }
 
     getSchemaValidationObject() {

@@ -1,8 +1,9 @@
 import { ChildEntity, Column, JoinColumn, OneToMany, OneToOne } from "typeorm";
-import { Leader, UserAccount } from "@shared/entities";
+import { Leader, Suspension, UserAccount } from "@shared/entities";
 import { AccountBaseEntity } from "../account-base-schema/account-base.schema";
 import { LeaderEntity } from "../leader-schema/leader.schema";
 import { MemberEntity } from "../member-schema/member.schema";
+import { AccountSuspensionEntity } from "../suspension-schema/suspension.schema";
 
 @ChildEntity("user")
 export class UserAccountEntity extends AccountBaseEntity implements UserAccount {
@@ -30,8 +31,18 @@ export class UserAccountEntity extends AccountBaseEntity implements UserAccount 
     declare currentMembership?: MemberEntity;
 
     @OneToMany(() => LeaderEntity, leader => leader.account)
-    leaderships: LeaderEntity[];
+    declare leaderships: LeaderEntity[];
 
     @OneToMany(() => MemberEntity, member => member.account)
-    memberships: MemberEntity[];
+    declare memberships: MemberEntity[];
+
+    @OneToOne(() => AccountSuspensionEntity, {
+        nullable: true,
+        eager: true
+    })
+    @JoinColumn()
+    declare suspension?: AccountSuspensionEntity;
+
+    @OneToMany(() => AccountSuspensionEntity, sus => sus.account)
+    declare suspensions?: AccountSuspensionEntity[];
 }

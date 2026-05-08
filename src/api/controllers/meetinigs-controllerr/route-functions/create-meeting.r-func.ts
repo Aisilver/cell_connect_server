@@ -38,11 +38,13 @@ export async function MeetCTRL_RF_createMeeting (req: Request, res: Response) {
             host: {id: accountId}
         })
 
-        const {id: MeetingId} = await MeetingEntityRepo.save(meetingToSave)
+        const savedMeeting = await MeetingEntityRepo.save(meetingToSave),
+
+        {id: MeetingId} = savedMeeting
 
         MeetingCtrlEventsManagerService.triggerBookedMeetingEvent(MeetingId)
 
-        MeetingCTRLTaskManager.MEETING_CANCELATION_TASK_MANAGER.addTaskWithSameKeyAndJobParam(MeetingId, NewMeeting.endTime)
+        MeetingCTRLTaskManager.MEETING_NOT_HOSTED_TASK_MANAGER.addTask(MeetingId, savedMeeting, savedMeeting.endTime)
 
         res.json(APIResponse())
 

@@ -6,7 +6,7 @@ import { MeetingAgenda } from "./meeting-agenda";
 import { Review } from "./review";
 import { UserAccount } from "./user-account";
 
-export type MeetingStatusTypes = "booked" | "pending" | "in-session" | "concluded" | "canceled";
+export type MeetingStatusTypes = "booked" | "pending" | "in-session" | "concluded" | "canceled" | "not-hosted";
 
 export interface Meeting extends EntityBase {
     title?: string;

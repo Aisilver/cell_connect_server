@@ -2,6 +2,9 @@ import { config } from "dotenv"
 import { AppJWTPayload, JWTConfigurator } from "../../../classes/jwt-configurator.class"
 import { AuthCtrlCacheService } from "./auth-ctrl-cache.service"
 import { Request, Response } from "express"
+import { FindOneOptions } from "typeorm"
+import { AccountBaseEntity } from "src/datasources/main-entities-ds/schemas/account-base-schema/account-base.schema"
+import { UserAccountEntity } from "src/datasources/main-entities-ds/schemas/user-account-schema/user-account.schema"
 
 config()
 
@@ -45,6 +48,30 @@ class AuthCtrlServiceMain {
         await AuthCtrlCacheService.setUserRefreshToken(userId, newRefreshToken)
 
         return newAccessToken
+    }
+
+    getUserAccountFindOneOptions (userId: number): FindOneOptions<UserAccountEntity> {
+        return {
+          where: {
+            user: {id: userId}
+          },
+          relations: {
+            user: {
+              location: true
+            },
+            currentLeadership: {
+              cell: {
+                suspension: true
+              }
+            },
+            currentMembership: {
+              cell: {
+                suspension: true
+              },
+              suspension: true
+            }
+          }
+        }
     }
 }
 

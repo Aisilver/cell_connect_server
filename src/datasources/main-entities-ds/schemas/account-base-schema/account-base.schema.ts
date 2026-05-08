@@ -1,8 +1,9 @@
-import { AccountBase, AccountOnlineStatuses, AccountType, Media } from "@shared/entities";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, TableInheritance } from "typeorm";
+import { AccountBase, AccountOnlineStatuses, AccountStatuses, AccountType, Media, Suspension } from "@shared/entities";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, TableInheritance } from "typeorm";
 import { MediaEntity } from "../media-schema/media.schema";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { UserEntity } from "../user-schema/user.schema";
+import { AccountSuspensionEntity } from "../suspension-schema/suspension.schema";
 
 @Entity("accounts")
 @TableInheritance({
@@ -19,7 +20,10 @@ export class AccountBaseEntity extends BaseEntity implements AccountBase {
     declare banned: boolean;
     
     @Column()
-    declare suspended: boolean;
+    declare new: boolean;
+
+    @Column()
+    declare status: AccountStatuses;
 
     @Column()
     declare online_status: AccountOnlineStatuses;

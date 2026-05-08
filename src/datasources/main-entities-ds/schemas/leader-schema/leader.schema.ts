@@ -3,6 +3,7 @@ import { BaseEntity } from "../../../classes/base-entity.schema";
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { CellEntity } from "../cell-schema/cell.schema";
 import { UserAccountEntity } from "../user-account-schema/user-account.schema";
+import { CellPermissionEntity } from "../cell-permission-schema/cell-permission.schema";
 
 @Entity("leaders")
 export class LeaderEntity extends BaseEntity implements Leader {
@@ -14,6 +15,13 @@ export class LeaderEntity extends BaseEntity implements Leader {
 
     @Column()
     declare status: LeaderStatutsTypes;
+
+    @OneToOne(() => CellPermissionEntity, {
+        cascade: true,
+        eager: true
+    })
+    @JoinColumn()
+    declare cell_permission: CellPermissionEntity;
 
     @OneToOne(() => UserAccountEntity)
     @JoinColumn()

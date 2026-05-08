@@ -20,18 +20,7 @@ export async function AuthCTRL_RF_initializeUser (req: Request, res: Response) {
     let account: AccountBaseEntity | AccountBase | null | undefined = await CAHCED_SIGNED_IN_ACCOUNTS.find(acct => acct.type == 'user' && acct.user?.id == userId )
 
     if(!account) {
-      account = await UserAccountEntityRepo.findOne(
-        {
-          where: {
-            user: {id: userId}
-          },
-          relations: {
-            user: {
-              location: true
-            }
-          }
-        }
-      )
+      account = await UserAccountEntityRepo.findOne(AuthCtrlService.getUserAccountFindOneOptions(userId))
 
       if(account) await CAHCED_SIGNED_IN_ACCOUNTS.add(account)
     }

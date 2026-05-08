@@ -1,10 +1,11 @@
-import { Cell, CellCategoryTypes } from "@shared/entities";
+import { Cell, CellCategoryTypes, Suspension } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { LeaderEntity } from "../leader-schema/leader.schema";
 import { MeetingEntity } from "../meeting-schema/meeting.schema";
 import { MemberEntity } from "../member-schema/member.schema";
-import { AppLocationEntity, CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
+import { CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
+import { CellSuspensionEntity } from "../suspension-schema/suspension.schema";
 
 @Entity("cells")
 export class CellEntity extends BaseEntity implements Cell {
@@ -31,14 +32,24 @@ export class CellEntity extends BaseEntity implements Cell {
     @JoinColumn()
     declare default_venue: CellVenueLocationEntity;
 
+    @OneToOne(() => CellSuspensionEntity, {
+        nullable: true,
+        eager: true
+    })
+    @JoinColumn()
+    declare suspension?: CellSuspensionEntity;
+
     @OneToOne(() => LeaderEntity, {
         cascade: true
     })
-    leader: LeaderEntity
+    declare leader: LeaderEntity
 
     @OneToMany(() => MemberEntity, member => member.cell)
-    members: MemberEntity[]
+    declare members: MemberEntity[]
 
     @OneToMany(() => MeetingEntity, meet => meet.cell)
-    meetings: MeetingEntity[]
+    declare meetings: MeetingEntity[]
+
+    @OneToMany(() => CellSuspensionEntity, sus => sus.cell)
+    declare suspensions?: CellSuspensionEntity[];
 }

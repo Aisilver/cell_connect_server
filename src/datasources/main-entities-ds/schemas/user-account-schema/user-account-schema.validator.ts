@@ -28,6 +28,10 @@ export class UserAccountEntitySchemaValidator extends SchemaValidator <UserAccou
         name: Joi.string().empty('').optional(),
         
         bio: Joi.string().empty('').optional(),
+
+        new: Joi.boolean().required(),
+        
+        status: Joi.string().allow('active', 'frozen', 'deleted').required(),
         
         user: new UserEntitySchemaValidator().getSchemaValidationObject().optional(),
 

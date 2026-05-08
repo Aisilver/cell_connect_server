@@ -2,6 +2,7 @@ import { AccountBaseEntity } from "./schemas/account-base-schema/account-base.sc
 import { AdminAccountEntity } from "./schemas/admin-account-schema/admin-account.schema";
 import { AppLocationEntity, CellVenueLocationEntity, UserLocationEntity } from "./schemas/app-location-schema/app-location.schema";
 import { AttendanceEntity } from "./schemas/attendance-schema/attendance.schema";
+import { CellPermissionEntity } from "./schemas/cell-permission-schema/cell-permission.schema";
 import { CellEntity } from "./schemas/cell-schema/cell.schema";
 import { LeaderEntity } from "./schemas/leader-schema/leader.schema";
 import { MediaEntity } from "./schemas/media-schema/media.schema";
@@ -9,6 +10,7 @@ import { MeetingAgendaEntity } from "./schemas/meeting-agenda-schema/meeting-age
 import { MeetingEntity } from "./schemas/meeting-schema/meeting.schema";
 import { MemberEntity } from "./schemas/member-schema/member.schema";
 import { ReviewEntity } from "./schemas/review-schema/review.schema";
+import { AccountSuspensionEntity, CellSuspensionEntity, MemberSuspensionEntity, SuspensionEntity } from "./schemas/suspension-schema/suspension.schema";
 import { UserAccountEntity } from "./schemas/user-account-schema/user-account.schema";
 import { UserEntity } from "./schemas/user-schema/user.schema";
 
@@ -19,13 +21,18 @@ export const MainEntitiesList = [
     UserAccountEntity,
     MediaEntity,
     AppLocationEntity,
+    CellEntity,
+    CellPermissionEntity,
     CellVenueLocationEntity,
     UserLocationEntity,
     MeetingEntity,
     MeetingAgendaEntity,
     LeaderEntity,
     MemberEntity,
-    CellEntity,
     ReviewEntity,
-    AttendanceEntity
+    AttendanceEntity,
+    SuspensionEntity,
+    MemberSuspensionEntity,
+    CellSuspensionEntity,
+    AccountSuspensionEntity
 ]

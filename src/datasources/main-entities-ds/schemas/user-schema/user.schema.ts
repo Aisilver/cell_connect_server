@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm"
-import { User, UserStatuses } from "@shared/entities"
+import { User } from "@shared/entities"
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { AccountBaseEntity } from "../account-base-schema/account-base.schema";
-import { AppLocationEntity, UserLocationEntity } from "../app-location-schema/app-location.schema";
+import { UserLocationEntity } from "../app-location-schema/app-location.schema";
 
 @Entity({name: "users"})
 export class UserEntity extends BaseEntity implements User {
@@ -34,13 +34,7 @@ export class UserEntity extends BaseEntity implements User {
     declare maritalStatus: string
     
     @Column()
-    declare DOB: Date
-
-    @Column()
-    declare new: boolean
-
-    @Column()
-    declare status: UserStatuses
+    declare DOB: Date;
 
     @OneToMany(() => AccountBaseEntity, account => account.user)
     accounts: AccountBaseEntity[]

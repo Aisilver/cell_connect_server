@@ -29,10 +29,6 @@ export class UserEntitySchemaValidator extends SchemaValidator<User | UserEntity
         
         DOB: Joi.date().required(),
         
-        new: Joi.boolean().required(),
-        
-        status: Joi.string().allow('active', 'frozen', 'deleted').required(),
-        
         createdAt: Joi.date().optional(),
         
         deletedAt: Joi.date().optional(),
