@@ -7,6 +7,7 @@ import { CellEntity } from "./schemas/cell-schema/cell.schema";
 import { LeaderEntity } from "./schemas/leader-schema/leader.schema";
 import { MediaEntity } from "./schemas/media-schema/media.schema";
 import { MeetingAgendaEntity } from "./schemas/meeting-agenda-schema/meeting-agenda.schema";
+import { MeetingEditLogEntity } from "./schemas/meeting-edit-log-schema/meeting-edit-log.schema";
 import { MeetingEntity } from "./schemas/meeting-schema/meeting.schema";
 import { MemberEntity } from "./schemas/member-schema/member.schema";
 import { ReviewEntity } from "./schemas/review-schema/review.schema";
@@ -27,6 +28,7 @@ export const MainEntitiesList = [
     UserLocationEntity,
     MeetingEntity,
     MeetingAgendaEntity,
+    MeetingEditLogEntity,
     LeaderEntity,
     MemberEntity,
     ReviewEntity,

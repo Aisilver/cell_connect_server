@@ -1,4 +1,5 @@
 import { EntityBase } from "../entity-base";
+import { MeetingEditLog } from "./meeting-edit-log";
 import { CellVenueLocation } from "./app-location";
 import { Attendance } from "./attendance";
 import { Cell } from "./cell";
@@ -21,5 +22,6 @@ export interface Meeting extends EntityBase {
     host?: UserAccount;
     agendas?: MeetingAgenda[];
     cell?: Cell;
-    reviews?: Review []
+    reviews?: Review [];
+    editLogs?: MeetingEditLog[];
 } 

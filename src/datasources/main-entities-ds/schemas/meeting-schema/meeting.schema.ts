@@ -1,4 +1,4 @@
-import { Attendance, Meeting, MeetingStatusTypes, Review } from "@shared/entities";
+import { Attendance, Meeting, MeetingEditLog, MeetingStatusTypes, Review } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { MeetingAgendaEntity } from "../meeting-agenda-schema/meeting-agenda.schema";
@@ -6,7 +6,8 @@ import { CellEntity } from "../cell-schema/cell.schema";
 import { UserAccountEntity } from "../user-account-schema/user-account.schema";
 import { AttendanceEntity } from "../attendance-schema/attendance.schema";
 import { ReviewEntity } from "../review-schema/review.schema";
-import { AppLocationEntity, CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
+import { CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
+import { MeetingEditLogEntity } from "../meeting-edit-log-schema/meeting-edit-log.schema";
 
 @Entity("meetings")
 export class MeetingEntity extends BaseEntity implements Meeting {
@@ -31,9 +32,9 @@ export class MeetingEntity extends BaseEntity implements Meeting {
     @Column()
     declare status: MeetingStatusTypes;
 
-    @ManyToOne(() => UserAccountEntity)
+    @OneToOne(() => UserAccountEntity)
     @JoinColumn()
-    host: UserAccountEntity;
+    declare host: UserAccountEntity;
 
     @OneToOne(() => CellVenueLocationEntity, {
         cascade: true,
@@ -45,17 +46,20 @@ export class MeetingEntity extends BaseEntity implements Meeting {
     @OneToMany(() => MeetingAgendaEntity, agenda => agenda.meeting, {
         cascade: true
     })
-    agendas: MeetingAgendaEntity[]  
+    declare agendas: MeetingAgendaEntity[]  
     
     @OneToMany(() => AttendanceEntity, attendant => attendant.meeting)
-    attendants: Attendance[];
+    declare attendants: Attendance[];
 
     @OneToMany(() => ReviewEntity, review => review.meeting)
-    reviews: Review[];
+    declare reviews: Review[];
+
+    @OneToMany(() => MeetingEditLogEntity, log => log.meeting)
+    declare editLogs: MeetingEditLog[];
 
     @ManyToOne(() => CellEntity, {
         onDelete: "CASCADE"
     })
     @JoinColumn()
-    cell: CellEntity
+    declare cell: CellEntity
 }

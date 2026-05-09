@@ -27,6 +27,7 @@ export async function MeetCTRL_RF_getUpcomingMeetingByCellId (req: Request, res:
                         host: {
                             profile_image: true
                         },
+                        editLogs: true,
                         venue: true,
                         cell: true
                     }

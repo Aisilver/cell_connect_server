@@ -3,8 +3,7 @@ import { AppJWTPayload, JWTConfigurator } from "../../../classes/jwt-configurato
 import { AuthCtrlCacheService } from "./auth-ctrl-cache.service"
 import { Request, Response } from "express"
 import { FindOneOptions } from "typeorm"
-import { AccountBaseEntity } from "src/datasources/main-entities-ds/schemas/account-base-schema/account-base.schema"
-import { UserAccountEntity } from "src/datasources/main-entities-ds/schemas/user-account-schema/user-account.schema"
+import { UserAccountEntity } from "../../../../datasources/main-entities-ds/schemas/user-account-schema/user-account.schema"
 
 config()
 
@@ -44,7 +43,9 @@ class AuthCtrlServiceMain {
         newRefreshToken = this.jwtConfig.generateRefreshToken(payload)
     
         this.jwtConfig.setRefreshTokenIntoResponseCookie(res, newRefreshToken)
-    
+
+        await AuthCtrlCacheService.deleteUserRefreshToken(userId)
+
         await AuthCtrlCacheService.setUserRefreshToken(userId, newRefreshToken)
 
         return newAccessToken
@@ -62,13 +63,18 @@ class AuthCtrlServiceMain {
             currentLeadership: {
               cell: {
                 suspension: true
-              }
+              },
+              
+              cell_permission: true
             },
             currentMembership: {
               cell: {
                 suspension: true
               },
-              suspension: true
+              
+              suspension: true,
+
+              cell_permission: true
             }
           }
         }
