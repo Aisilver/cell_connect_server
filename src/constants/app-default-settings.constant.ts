@@ -16,7 +16,9 @@ export const APP_DEFAULT_SETTINGS_CONSTANT: AppSettings = {
 
         max_meeting_duration: "3h",
         
-        max_meeting_edit_chances: 3
+        max_meeting_edit_chances: 3,
+
+        max_meeting_editable_deadline_hours: 3
     },
 
     user_settings: {

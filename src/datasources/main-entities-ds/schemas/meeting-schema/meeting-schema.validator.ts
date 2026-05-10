@@ -3,7 +3,7 @@ import { SchemaValidator } from "../../../../classes/schema-validator/schema-val
 import { MeetingEntity } from "./meeting.schema";
 import Joi, { ObjectSchema } from "joi";
 import { MeetingAgendaEntitySchemaValidator } from "../meeting-agenda-schema/meeting-agenda-schema.validator";
-import { AppLocationEntitySchemaValidator } from "../app-location-schema/app-location-schema.validator";
+import { AppLocationEntitySchemaValidator, CellVenueLocationEntitySchemaValidator } from "../app-location-schema/app-location-schema.validator";
 
 export class MeetingEntitySchemaValidator extends SchemaValidator<Meeting | MeetingEntity> {
     protected schemaValObj: ObjectSchema<Meeting | MeetingEntity> = Joi.object({
@@ -25,7 +25,7 @@ export class MeetingEntitySchemaValidator extends SchemaValidator<Meeting | Meet
 
         agendas: Joi.array().items(new MeetingAgendaEntitySchemaValidator().getSchemaValidationObject()).empty().optional(),
 
-        venue: new AppLocationEntitySchemaValidator().getSchemaValidationObject().optional(),
+        venue: new CellVenueLocationEntitySchemaValidator().getSchemaValidationObject().optional(),
 
         createdAt: Joi.date().optional(),
 

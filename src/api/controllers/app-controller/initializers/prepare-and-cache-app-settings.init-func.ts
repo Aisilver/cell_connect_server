@@ -36,15 +36,6 @@ export async function APP_R_Init_prepareAndCacheAppSettings () {
         }
     }
 
-    await CACHED_APP_SETTINGS.set(settingsInUse)
-
-    for (const key of failedSettingKeys) {
-        await AppSettingsRepo.save(AppSettingsRepo.create({
-            key,
-            body: APP_DEFAULT_SETTINGS_CONSTANT[key]
-        }))
-    }
-
     for (const key of settingsKeyWithdifferentObjectKeys) {
         const target = settingsInUse[key],
 
@@ -59,5 +50,14 @@ export async function APP_R_Init_prepareAndCacheAppSettings () {
         settingsInUse[key] = target
 
         await AppSettingsRepo.update({key: Equal(key)}, {body: target})
+    }
+
+    await CACHED_APP_SETTINGS.set(settingsInUse)
+
+    for (const key of failedSettingKeys) {
+        await AppSettingsRepo.save(AppSettingsRepo.create({
+            key,
+            body: APP_DEFAULT_SETTINGS_CONSTANT[key]
+        }))
     }
 }
