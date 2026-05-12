@@ -12,7 +12,7 @@ export abstract class BaseEventManager {
 
     private WorkingEventsMap: Map<string, boolean> = new Map()
 
-    private EventsInQueueMap: Map<string, any[]> = new Map()
+    private EventsInQueueMap: Map<string, EventPaylod[]> = new Map()
 
     constructor () {
         setTimeout(() => this.ListenAll(), 1)
@@ -23,7 +23,7 @@ export abstract class BaseEventManager {
     protected Trigger(key: string, args: any = undefined, type: EventTypes = "queue") {
         if(type == "queue") {
             if(this.WorkingEventsMap.has(key))
-                this.addToQueue(key, args)
+                this.addToQueue(key, {type, args})
             else {
                 this.WorkingEventsMap.set(key, true)
 

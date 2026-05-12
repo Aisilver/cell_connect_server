@@ -8,10 +8,6 @@ import { MemberSuspensionEntity } from "../suspension-schema/suspension.schema";
 
 @Entity("members")
 export class MemberEntity extends BaseEntity implements Member {
-    
-    @Column()
-    declare cell_id: number;
-
     @Column()
     declare new: boolean;
 
@@ -28,7 +24,7 @@ export class MemberEntity extends BaseEntity implements Member {
     @ManyToOne(() => CellEntity, cell => cell.members, {
         onDelete: "CASCADE"
     })
-    @JoinColumn({name: 'cell_id'})
+    @JoinColumn()
     declare cell: CellEntity;
 
     @OneToOne(() => CellPermissionEntity, {

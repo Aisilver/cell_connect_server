@@ -19,6 +19,8 @@ const {NODE_ENV} = process.env
 export abstract class BaseEmailManager {
     protected abstract mail_manager: MailManagerService
 
+    protected readonly HIDDEN_ELEMENT_CSS_STYLE = "display: none"
+
     private subs?: Subscription
 
     protected async sendEmail (opts: CreateEmailOptions) {

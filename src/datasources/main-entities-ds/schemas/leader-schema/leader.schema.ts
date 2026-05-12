@@ -8,9 +8,6 @@ import { CellPermissionEntity } from "../cell-permission-schema/cell-permission.
 @Entity("leaders")
 export class LeaderEntity extends BaseEntity implements Leader {
     @Column()
-    declare cell_id: number;
-
-    @Column()
     declare new: boolean;
 
     @Column()

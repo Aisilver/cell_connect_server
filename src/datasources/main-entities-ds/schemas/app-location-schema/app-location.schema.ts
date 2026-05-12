@@ -1,6 +1,7 @@
-import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
-import { AppLocation, CellVenueLocation, UserLocation } from "@shared/entities";
+import { ChildEntity, Column, Entity, OneToOne, TableInheritance } from "typeorm";
+import { AppLocation, CellVenueLocation, Meeting, UserLocation } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
+import { MeetingEntity } from "../meeting-schema/meeting.schema";
 @Entity('location')
 @TableInheritance({
     pattern: "STI",
@@ -26,18 +27,20 @@ export class UserLocationEntity extends AppLocationEntity implements UserLocatio
 @ChildEntity("cell-venue")
 export class CellVenueLocationEntity extends AppLocationEntity implements CellVenueLocation {
     @Column()
+    declare default: boolean;
+    
+    @Column()
     declare addressInFull: string;
 
     @Column()
     declare landmark: string;
 
     @Column({nullable: true})
-    latitude?: number;
+    declare latitude?: number;
     
     @Column({nullable: true})
-    longtitude?: number;
+    declare longtitude?: number;
     
     @Column({nullable: true})
-    estateName?: string;
-
+    declare estateName?: string;
 }

@@ -7,6 +7,7 @@ import { MainEntitiesRepoManagerService } from "../../../../datasources/main-ent
 import Joi from "joi";
 import { MeetingCtrlEventsManagerService } from "../events/meeting-ctrl-events-manager.service";
 import { MeetingCTRLTaskManager } from "../jobs/meeting-ctrl-cron-manager.service";
+import { MeetingEntityNotificationManager } from "../../../../notification-handlers/meeting-notifications/meeting-entity.notification-handler";
 
 const {MeetingEntityRepo} = MainEntitiesRepoManagerService
 
@@ -42,9 +43,11 @@ export async function MeetCTRL_RF_createMeeting (req: Request, res: Response) {
 
         {id: MeetingId} = savedMeeting
 
-        MeetingCtrlEventsManagerService.triggerBookedMeetingEvent(MeetingId)
+        MeetingCtrlEventsManagerService.triggerBookedMeetingEvent(savedMeeting)
 
         MeetingCTRLTaskManager.MEETING_NOT_HOSTED_TASK_MANAGER.addTask(MeetingId, savedMeeting, savedMeeting.endTime)
+
+        MeetingEntityNotificationManager.notifyOfMeetingBooked(savedMeeting)
 
         res.json(APIResponse())
 

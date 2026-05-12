@@ -27,5 +27,5 @@ export class MeetingAgendaEntity extends BaseEntity implements MeetingAgenda {
         onDelete: "CASCADE"
     })
     @JoinColumn()
-    meeting: MeetingEntity
+    declare meeting: MeetingEntity
 }

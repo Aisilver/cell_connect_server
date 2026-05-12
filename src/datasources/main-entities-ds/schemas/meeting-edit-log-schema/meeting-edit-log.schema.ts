@@ -6,7 +6,7 @@ import { MeetingEntity } from "../meeting-schema/meeting.schema";
 
 @Entity("meeting-edit-logs")
 export class MeetingEditLogEntity extends BaseEntity implements MeetingEditLog {
-    @Column({nullable: true})
+    @Column({ nullable: true })
     declare title_changed?: boolean;
 
     @Column({nullable: true})
@@ -20,6 +20,9 @@ export class MeetingEditLogEntity extends BaseEntity implements MeetingEditLog {
 
     @Column({ nullable: true })
     declare agenda_changed?: boolean;
+
+    @Column({ nullable: true })
+    declare type_changed?: boolean;
 
     @OneToOne(() => UserAccountEntity)
     @JoinColumn()
