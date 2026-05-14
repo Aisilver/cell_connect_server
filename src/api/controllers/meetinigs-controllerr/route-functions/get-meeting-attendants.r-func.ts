@@ -3,7 +3,7 @@ import { APIFailResponse, APIResponse } from "../../../functions/api-response.fu
 import Joi from "joi";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
 import { Equal, In, Not } from "typeorm";
-import { RequestJWTPayloadExtractor } from "../../../functions/request-user-payload-extractor.func";
+import { ExpressRequestJWTPayloadExtractor } from "../../../functions/express-request-jwt-payload-extractor.func";
 import { ToBoolean } from "../../../../functions/to-boolean.func";
 import { MeetingAttendantsRequestQuery } from "@shared/route-types";
 import { PaginateFindAndCountData } from "../../../../functions/paginateFindAndCount.func";
@@ -13,7 +13,7 @@ const {AttendanceEntityRepo} = MainEntitiesRepoManagerService
 export async function MeetCTRL_RF_getMeetingAttendants (req: Request, res: Response) {
     try {
 
-        const jwtPayload = RequestJWTPayloadExtractor(req)
+        const jwtPayload = ExpressRequestJWTPayloadExtractor(req)
 
         if(!jwtPayload) return res.status(403).json(APIFailResponse("", 'IMPOSTER-ALERT'))
         

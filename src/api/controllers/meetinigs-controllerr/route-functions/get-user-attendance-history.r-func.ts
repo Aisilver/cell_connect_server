@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { APIFailResponse, APIResponse } from "../../../functions/api-response.func";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
-import { RequestJWTPayloadExtractor } from "../../../functions/request-user-payload-extractor.func";
+import { ExpressRequestJWTPayloadExtractor } from "../../../functions/express-request-jwt-payload-extractor.func";
 import { PaginatedData, Pagination } from "@shared/common";
 import { Attendance } from "@shared/entities";
 import { PaginateFindAndCountData } from "../../../../functions/paginateFindAndCount.func";
@@ -10,7 +10,7 @@ const {AttendanceEntityRepo} = MainEntitiesRepoManagerService
 
 export async function MeetCTRL_RF_getUserAttendanceHistory (req: Request, res: Response) {
     try {
-        const payload = RequestJWTPayloadExtractor(req)
+        const payload = ExpressRequestJWTPayloadExtractor(req)
 
         if(!payload) return res.status(403).json(APIFailResponse("", 'IMPOSTER-ALERT')) 
         

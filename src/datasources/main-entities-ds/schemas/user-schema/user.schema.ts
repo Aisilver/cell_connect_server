@@ -3,7 +3,6 @@ import { User } from "@shared/entities"
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { AccountBaseEntity } from "../account-base-schema/account-base.schema";
 import { UserLocationEntity } from "../app-location-schema/app-location.schema";
-
 @Entity({name: "users"})
 export class UserEntity extends BaseEntity implements User {
     @Column()
@@ -35,6 +34,9 @@ export class UserEntity extends BaseEntity implements User {
     
     @Column()
     declare DOB: Date;
+
+    @Column()
+    declare timezone: string;
 
     @OneToMany(() => AccountBaseEntity, account => account.user)
     accounts: AccountBaseEntity[]

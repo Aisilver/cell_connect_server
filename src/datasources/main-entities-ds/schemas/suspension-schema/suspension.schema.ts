@@ -4,7 +4,7 @@ import { AccountSuspension, Cell, CellSuspension, Member, MemberSuspension, Susp
 import { AccountBaseEntity } from "../account-base-schema/account-base.schema";
 import { MemberEntity } from "../member-schema/member.schema";
 import { CellEntity } from "../cell-schema/cell.schema";
-import { UserAccountEntity } from "../user-account-schema/user-account.schema";
+import { Utc_Transformer } from "../../../../typeorm-middlewares/date-utc-transformer.type-middleware";
 
 @Entity("suspension")
 @TableInheritance({
@@ -18,7 +18,7 @@ export class SuspensionEntity extends BaseEntity implements Suspension {
     @Column()
     declare active: boolean;
 
-    @Column()
+    @Column({transformer: Utc_Transformer})
     declare endDate: Date;
 
     @Column()

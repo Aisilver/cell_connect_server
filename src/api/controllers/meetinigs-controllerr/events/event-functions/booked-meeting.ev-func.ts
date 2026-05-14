@@ -1,4 +1,3 @@
-import { Meeting } from "@shared/entities";
 import { MeetingCtrlService } from "../../services/meeting-ctrl.service";
 import { MeetCtrlMailService } from "../../services/meeting-ctrl-mail.service";
 import { MainEntitiesRepoManagerService } from "../../../../../datasources/main-entities-ds/repos-manger";
@@ -6,32 +5,29 @@ import { Equal } from "typeorm";
 
 const {MeetingEntityRepo} = MainEntitiesRepoManagerService
 
-export async function MeetCTRL_EV_bookedMeeting(meeting: Meeting) {
-    const {id} = meeting,
-
-    {venue} = await MeetingEntityRepo.findOneOrFail(
+export async function MeetCTRL_EV_bookedMeeting(meetingId: number) {
+    const meetingFromDB = await MeetingEntityRepo.findOneOrFail(
         {
             where: {
-                id: Equal(id ?? 0)
+                id: Equal(meetingId)
             },
-            
-            select: {id: true},
-
             relations: {
-                venue: true
+                host: {
+                    user: true,
+                },
+                venue: true,
+                cell: true
             }
         }
     ),
 
-    cellMembers = await MeetingCtrlService.getActiveMembersFromByMeetingId(id ?? 0)
+    cellMembers = await MeetingCtrlService.getActiveMembersByMeetingId(meetingId)
 
     if(cellMembers.length < 1) return
-
-    meeting.venue = venue
 
     for (const member of cellMembers) {
         const {firstName, email} = member.account.user
 
-        await MeetCtrlMailService.sendMeetingBookedMail(firstName, email, meeting)
+        await MeetCtrlMailService.sendMeetingBookedMail(firstName, email, meetingFromDB)
     }
 }

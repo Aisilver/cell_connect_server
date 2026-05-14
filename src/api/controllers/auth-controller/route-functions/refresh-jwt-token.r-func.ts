@@ -1,18 +1,15 @@
 import { Request, Response } from "express";
 import { APIFailResponse, APIResponse } from "../../../functions/api-response.func";
-import { config } from "dotenv";
 import { JWTConfigurator } from "../../../classes/jwt-configurator.class";
+import { API_COOKIE_KEY_NAMES_CONSTANT } from "../../../../constants/api-cookie-key-names.contant";
 
-config()
-
-const {REFRESH_TOKEN_COOKIE_NAME} = process.env,
+const {REFRESH_TOKEN_KEY} = API_COOKIE_KEY_NAMES_CONSTANT,
 
 jwtConfig = new JWTConfigurator()
 
 export async function AuthCTRL_RF_refreshJWTToken(req: Request, res: Response) {
     try {
-        
-        const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME]
+        const refreshToken = req.cookies[REFRESH_TOKEN_KEY]
 
         if (!refreshToken) throw Error("no refresh token found")
 

@@ -8,6 +8,7 @@ import { AttendanceEntity } from "../attendance-schema/attendance.schema";
 import { ReviewEntity } from "../review-schema/review.schema";
 import { CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
 import { MeetingEditLogEntity } from "../meeting-edit-log-schema/meeting-edit-log.schema";
+import { Utc_Transformer } from "../../../../typeorm-middlewares/date-utc-transformer.type-middleware";
 
 @Entity("meetings")
 export class MeetingEntity extends BaseEntity implements Meeting {
@@ -20,10 +21,10 @@ export class MeetingEntity extends BaseEntity implements Meeting {
     @Column({nullable: true, type: "text"})
     declare description?: string;
 
-    @Column()
+    @Column({transformer: Utc_Transformer})
     declare startTime: Date;
 
-    @Column()
+    @Column({transformer: Utc_Transformer})
     declare endTime: Date;
 
     @Column()

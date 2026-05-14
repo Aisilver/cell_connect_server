@@ -16,8 +16,6 @@ declare global {
             ACCESS_TOKEN_SECRET_KEY: string;
 
             REFRESH_TOKEN_SECRET_KEY: string;
-
-            REFRESH_TOKEN_COOKIE_NAME: string;
             
             DB_NAME: string;
             

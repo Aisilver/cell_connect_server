@@ -14,7 +14,7 @@ type EmailSendResponse = {
     message?: string
 }
 
-const {NODE_ENV} = process.env
+const {NODE_ENV, MAIN_DOMAIN_ORIGIN_URL} = process.env
 
 export abstract class BaseEmailManager {
     protected abstract mail_manager: MailManagerService
@@ -22,6 +22,22 @@ export abstract class BaseEmailManager {
     protected readonly HIDDEN_ELEMENT_CSS_STYLE = "display: none"
 
     private subs?: Subscription
+
+    protected MainDomainUrlBuilder (params: (string | number)[] | string, query = {}) {
+        const pathCommands = typeof params == 'string' ? [params] : params,
+
+        baseUrl = `${MAIN_DOMAIN_ORIGIN_URL}/${pathCommands.join("/")}`,
+
+        queryEntries = Object.entries(query).map(entry => {
+            const [key, value] = entry
+
+            return `${key}=${value}`
+        })
+        
+        let queries = `${queryEntries.join("&")}`
+
+        return queryEntries.length < 1 ? baseUrl : `${baseUrl}?${queries}`
+    }
 
     protected async sendEmail (opts: CreateEmailOptions) {
         let result: EmailSendResponse 

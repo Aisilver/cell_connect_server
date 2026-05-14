@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { APIFailResponse, APIResponse } from "../../../functions/api-response.func";
 import { MeetingCreationRequestData } from "@shared/route-types/meetings-route/meeting-creation-request.type";
-import { RequestJWTPayloadExtractor } from "../../../functions/request-user-payload-extractor.func";
+import { ExpressRequestJWTPayloadExtractor } from "../../../functions/express-request-jwt-payload-extractor.func";
 import { MeetingEntitySchemaValidator } from "../../../../datasources/main-entities-ds/schemas/meeting-schema/meeting-schema.validator";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
 import Joi from "joi";
@@ -15,7 +15,7 @@ export async function MeetCTRL_RF_createMeeting (req: Request, res: Response) {
     try {
         const creationRequestData = req.body as MeetingCreationRequestData,
         
-        {accountId} = RequestJWTPayloadExtractor(req),
+        {accountId} = ExpressRequestJWTPayloadExtractor(req),
 
         {cellId, usingNewVenue, meeting} = creationRequestData,
 
@@ -43,7 +43,7 @@ export async function MeetCTRL_RF_createMeeting (req: Request, res: Response) {
 
         {id: MeetingId} = savedMeeting
 
-        MeetingCtrlEventsManagerService.triggerBookedMeetingEvent(savedMeeting)
+        MeetingCtrlEventsManagerService.triggerBookedMeetingEvent(MeetingId)
 
         MeetingCTRLTaskManager.MEETING_NOT_HOSTED_TASK_MANAGER.addTask(MeetingId, savedMeeting, savedMeeting.endTime)
 

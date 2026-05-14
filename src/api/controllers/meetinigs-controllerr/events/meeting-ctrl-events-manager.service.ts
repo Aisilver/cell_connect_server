@@ -1,4 +1,3 @@
-import { Meeting } from "@shared/entities"
 import { BaseEventManager } from "../../../../classes/base-event-manger/base-event-service.class"
 import { MeetingEditEventParam } from "./types"
 import { MeetCTRL_EV_bookedMeeting } from "./event-functions/booked-meeting.ev-func"
@@ -15,7 +14,7 @@ class MeetingControllersEventManager extends BaseEventManager {
         this.ListenFor(this.EDIT_MEETING_EVENT_KEY, MeetCTRL_EV_editedMeeting)
     }
 
-    triggerBookedMeetingEvent = (meeting: Meeting) => this.Trigger(this.BOOKED_MEETING_EVENT_KEY, meeting)
+    triggerBookedMeetingEvent = (meetingId: number) => this.Trigger(this.BOOKED_MEETING_EVENT_KEY, meetingId)
 
     triggerEditedMeetingEvent = (param: MeetingEditEventParam) => this.Trigger(this.EDIT_MEETING_EVENT_KEY, param)
 }

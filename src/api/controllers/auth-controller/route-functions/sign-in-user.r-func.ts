@@ -50,7 +50,7 @@ export async function AuthCTRL_RF_signInUser (req: Request, res: Response) {
         
         const {id: userId} = userFoundInDB,
         
-        accountFromDB = await UserAccountEntityRepo.findOne(AuthCtrlService.getUserAccountFindOneOptions(userId))
+        accountFromDB = await UserAccountEntityRepo.findOne(AuthCtrlService.getUserAccountByUserIdFindOneOptions(userId))
 
         if(!accountFromDB) throw Error("account cannot be found")
         

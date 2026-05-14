@@ -4,7 +4,7 @@ import { MeetCtrlMailService } from "../../services/meeting-ctrl-mail.service";
 import { MeetingCtrlService } from "../../services/meeting-ctrl.service";
 import { Equal } from "typeorm";
 
-const {MeetingAgendaEntityRepo, CellVenueEntityRepo} = MainEntitiesRepoManagerService
+const {MeetingAgendaEntityRepo, CellVenueEntityRepo, MeetingEntityRepo} = MainEntitiesRepoManagerService
 
 export async function MeetCTRL_EV_editedMeeting(param: MeetingEditEventParam) {
     const {editLog, meetingId, newMeeting, oldMeeting} = param,
@@ -24,12 +24,29 @@ export async function MeetCTRL_EV_editedMeeting(param: MeetingEditEventParam) {
     }
 
     if(venue_changed) {
+
         if(!oldMeeting.venue?.default) {
             await CellVenueEntityRepo.delete({id: Equal(oldMeeting.venue?.id ?? 0)})
         }
+
+        const {venue} = newMeeting
+
+        if(venue) {
+            const newSavedVenue = await CellVenueEntityRepo.save(CellVenueEntityRepo.create(venue))
+
+            await MeetingEntityRepo.update(
+                {
+                    id: Equal(meetingId),
+                },
+                {
+                    venue: {id: newSavedVenue.id}
+                }
+            )
+        }
+        
     }
     
-    const cellMembers = await MeetingCtrlService.getActiveMembersFromByMeetingId(meetingId)
+    const cellMembers = await MeetingCtrlService.getActiveMembersByMeetingId(meetingId)
 
     if(cellMembers.length < 1) return
 

@@ -1,21 +1,21 @@
 import { MeetingEditRequestData } from "@shared/route-types";
 import { Request, Response } from "express";
 import { APIFailResponse, APIResponse } from "../../../functions/api-response.func";
-import { AuthCtrlService } from "../../auth-controller/services/auth-ctrl.service";
 import { MeetingEntitySchemaValidator } from "../../../../datasources/main-entities-ds/schemas/meeting-schema/meeting-schema.validator";
 import Joi from "joi";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
 import { Equal } from "typeorm";
 import { MeetingEntityNotificationManager } from "../../../../notification-handlers/meeting-notifications/meeting-entity.notification-handler";
 import { MeetingCtrlEventsManagerService } from "../events/meeting-ctrl-events-manager.service";
+import { ExpressRequestJWTPayloadExtractor } from "../../../functions/express-request-jwt-payload-extractor.func";
 
 const {MeetingEntityRepo, MeetingEditLogEntityRepo} = MainEntitiesRepoManagerService
 
 export async function MeetCTRL_RF_editMeeting(req: Request, res: Response) {
     try {
-        const {accountId} = await AuthCtrlService.requestCookieRefreshTokenAuthenticationAndJwtPayloadExtraction(req)
+        const {accountId} = ExpressRequestJWTPayloadExtractor(req),
 
-        const body: MeetingEditRequestData = req.body,
+        body: MeetingEditRequestData = req.body,
 
         {error: meetingIdError, value: meetingId} = Joi.number().not(0).required().validate(req.params['meetingId']),
 
@@ -63,14 +63,17 @@ export async function MeetCTRL_RF_editMeeting(req: Request, res: Response) {
             meeting: {id: meetingId} 
         }))
  
-        if(affected) MeetingEntityNotificationManager.notifyOfMeetingEdit(savedEditLog, newMeeting)
+        if(affected) {
+            
+            MeetingEntityNotificationManager.notifyOfMeetingEdit(savedEditLog, newMeeting)
 
-        MeetingCtrlEventsManagerService.triggerEditedMeetingEvent({
-            editLog: savedEditLog,
-            meetingId,
-            newMeeting,
-            oldMeeting
-        })
+            MeetingCtrlEventsManagerService.triggerEditedMeetingEvent({
+                editLog: savedEditLog,
+                meetingId,
+                newMeeting,
+                oldMeeting
+            })
+        }
     
         res.json(APIResponse())
          

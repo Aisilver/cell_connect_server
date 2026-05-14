@@ -5,6 +5,8 @@ import { MeetCTRL_RF_getUpcomingMeetingByCellId } from "./route-functions/get-up
 import { MeetCTRL_RF_createMeeting } from "./route-functions/create-meeting.r-func";
 import { MeetCTRL_RF_getMeetingDefaultVenue } from "./route-functions/get-meeting-default-venue.r-func";
 import { MeetCTRL_RF_editMeeting } from "./route-functions/edit-meeting.r-func";
+import { MeetCTRL_RF_bookAMeetingValidator } from "./route-functions/book-a-meeting-validator.r-func";
+import { MeetCTRL_RF_editAMeetingValidator } from "./route-functions/edit-a-meeting-validator.r-func";
 
 class MeetingsAPIRouteController extends ControllerEngine {
     protected routeBaseUrl: string = "meetings";
@@ -18,9 +20,13 @@ class MeetingsAPIRouteController extends ControllerEngine {
 
         this.router.route("/get-meet-default-venue/:cellId").get(MeetCTRL_RF_getMeetingDefaultVenue)
 
+        this.router.route("/book-a-meeting-validator").get(MeetCTRL_RF_bookAMeetingValidator)
+
         this.router.route("/book-meeting").post(MeetCTRL_RF_createMeeting)
 
         this.router.route("/edit-meeting/:meetingId").put(MeetCTRL_RF_editMeeting)
+
+        this.router.route("/edit-a-meeting-validator").get(MeetCTRL_RF_editAMeetingValidator)
     }
 }
 

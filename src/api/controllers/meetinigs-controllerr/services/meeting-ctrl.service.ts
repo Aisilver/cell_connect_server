@@ -6,7 +6,7 @@ const {MemberEntityRepo, MeetingEntityRepo} = MainEntitiesRepoManagerService
 
 class MeetingControllerService {
 
-    async getActiveMembersFromByMeetingId (meetingId: number) {
+    async getActiveMembersByMeetingId (meetingId: number) {
         try {
             const {cell} = await MeetingEntityRepo.findOneOrFail(
                 {

@@ -1,0 +1,1 @@
+export type ApiJWTPayload = {userId: number, accountId: number}

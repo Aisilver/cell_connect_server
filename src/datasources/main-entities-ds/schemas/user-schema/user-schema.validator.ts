@@ -28,6 +28,8 @@ export class UserEntitySchemaValidator extends SchemaValidator<User | UserEntity
         maritalStatus: Joi.string().allow('married', 'single').required(),
         
         DOB: Joi.date().required(),
+
+        timezone: Joi.string().required(),
         
         createdAt: Joi.date().optional(),
         

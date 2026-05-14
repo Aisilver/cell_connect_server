@@ -19,8 +19,6 @@ const ENVSchema = Joi.object<NodeJS.ProcessEnv>({
     ACCESS_TOKEN_SECRET_KEY: Joi.string().required(),
 
     REFRESH_TOKEN_SECRET_KEY: Joi.string().required(),
-
-    REFRESH_TOKEN_COOKIE_NAME: Joi.string().required(),
     
     DB_NAME: Joi.string().required(),
     

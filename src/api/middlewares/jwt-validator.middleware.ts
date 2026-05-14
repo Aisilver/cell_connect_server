@@ -1,15 +1,15 @@
-import { config } from "dotenv";
 import { NextFunction, Request, Response } from "express";
 import { APIFailResponse } from "../functions/api-response.func";
 import { JWTConfigurator } from "../classes/jwt-configurator.class";
+import { API_HEADER_KEY_NAMES_CONSTANT } from "../../constants/api-header-key-names.constant";
 
-config()
+const {ACCESS_TOKEN_KEY} = API_HEADER_KEY_NAMES_CONSTANT,
 
-const jwtConfig = new JWTConfigurator()
+jwtConfig = new JWTConfigurator()
 
 export async function JWTValidatorMiddleWare(req: Request, res: Response, next: NextFunction) {
     try {
-        const accessTokenHeader = req.get('Authorization')
+        const accessTokenHeader = req.get(ACCESS_TOKEN_KEY)
 
         if(!accessTokenHeader) return res.status(401).json(APIFailResponse("authorization token header was not found", "NO_TOKEN"))
 

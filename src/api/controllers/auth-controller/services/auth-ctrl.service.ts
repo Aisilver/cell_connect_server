@@ -1,19 +1,18 @@
-import { config } from "dotenv"
-import { AppJWTPayload, JWTConfigurator } from "../../../classes/jwt-configurator.class"
+import { JWTConfigurator } from "../../../classes/jwt-configurator.class"
 import { AuthCtrlCacheService } from "./auth-ctrl-cache.service"
 import { Request, Response } from "express"
 import { FindOneOptions } from "typeorm"
 import { UserAccountEntity } from "../../../../datasources/main-entities-ds/schemas/user-account-schema/user-account.schema"
+import { API_COOKIE_KEY_NAMES_CONSTANT } from "../../../../constants/api-cookie-key-names.contant"
+import { ApiJWTPayload } from "src/api/types"
 
-config()
-
-const {REFRESH_TOKEN_COOKIE_NAME} = process.env
+const {REFRESH_TOKEN_KEY} = API_COOKIE_KEY_NAMES_CONSTANT
 
 class AuthCtrlServiceMain {
     private jwtConfig = new JWTConfigurator()
     
     async requestCookieRefreshTokenAuthenticationAndJwtPayloadExtraction (req: Request) {
-        const cookieRefreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME]
+        const cookieRefreshToken = req.cookies[REFRESH_TOKEN_KEY]
         
         if (!cookieRefreshToken) throw Error("no refresh token found in cookie")    
             
@@ -34,24 +33,23 @@ class AuthCtrlServiceMain {
         return payload
     }
 
-    async setResponseRefeshTokenAndGetAccessToken (res: Response, payload: AppJWTPayload) {
-
+    async setResponseRefeshTokenAndGetAccessToken (res: Response, payload: ApiJWTPayload) {
         const { userId } = payload,
         
         newAccessToken = this.jwtConfig.generateAccessToken(payload),
     
         newRefreshToken = this.jwtConfig.generateRefreshToken(payload)
     
-        this.jwtConfig.setRefreshTokenIntoResponseCookie(res, newRefreshToken)
-
         await AuthCtrlCacheService.deleteUserRefreshToken(userId)
 
         await AuthCtrlCacheService.setUserRefreshToken(userId, newRefreshToken)
 
+        this.jwtConfig.setRefreshTokenIntoResponseCookie(res, newRefreshToken)
+
         return newAccessToken
     }
 
-    getUserAccountFindOneOptions (userId: number): FindOneOptions<UserAccountEntity> {
+    getUserAccountByUserIdFindOneOptions (userId: number): FindOneOptions<UserAccountEntity> {
         return {
           where: {
             user: {id: userId}

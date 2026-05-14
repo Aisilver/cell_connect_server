@@ -2,6 +2,7 @@ import { AccountBase, AppSettings } from "@shared/entities";
 import { BaseCacheManager } from "../classes/base-cache-manager/base-cache-service.class"
 import { CacheManager, RedisCacheManager } from "./cache-manger/cache-manager.services"
 import { TIME_IN_SECONDS_CONSTANT } from "../constants/time-in-seconds.constant";
+import { AccountBaseEntity } from "../datasources/main-entities-ds/schemas/account-base-schema/account-base.schema";
 
 const { MONTH } = TIME_IN_SECONDS_CONSTANT
 
@@ -10,7 +11,7 @@ class ServerService extends BaseCacheManager {
 
     protected CacheClient: RedisCacheManager = CacheManager;
 
-    readonly CAHCED_SIGNED_IN_ACCOUNTS = this.Collection<AccountBase>("signed-in-accounts", MONTH)
+    readonly CAHCED_SIGNED_IN_ACCOUNTS = this.Collection<AccountBaseEntity | AccountBase>("signed-in-accounts", MONTH * 3)
 
     readonly CACHED_APP_SETTINGS = this.SingleItem<AppSettings>("app-settings", MONTH * 3)
     

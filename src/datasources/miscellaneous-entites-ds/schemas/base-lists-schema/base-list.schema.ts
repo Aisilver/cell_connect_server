@@ -1,6 +1,7 @@
 import { List, ListTypes } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
+import { TextToSlugTransformer } from "../../../../typeorm-middlewares/text-slug-transformer.type-middleware";
 
 @Entity("lists")
 @TableInheritance({
@@ -13,7 +14,7 @@ import { ChildEntity, Column, Entity, TableInheritance } from "typeorm";
 export class BaseListEntity extends BaseEntity implements List {
     declare type?: ListTypes;
 
-    @Column()
+    @Column({transformer: TextToSlugTransformer})
     declare slug: string
 
     @Column()
