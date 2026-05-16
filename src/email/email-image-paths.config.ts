@@ -7,7 +7,9 @@ const EmailImagePathsConfiguration = {
 
     OTP_BANNER: SystemsResourcesManagerService.generateURLPathToResourceMedia('image', 'undraw_safe_0mei.svg'),
 
-    BOOK_MEETING_BANNER: SystemsResourcesManagerService.generateURLPathToResourceMedia('image', 'undraw_fans_icv6.png')
+    BOOK_MEETING_BANNER: SystemsResourcesManagerService.generateURLPathToResourceMedia('image', 'undraw_fans_icv6.png'),
+
+    EDIT_MEETING_BANNER: SystemsResourcesManagerService.generateURLPathToResourceMedia('image', 'undraw_update_jvp1.png')
 }
 
 export default EmailImagePathsConfiguration

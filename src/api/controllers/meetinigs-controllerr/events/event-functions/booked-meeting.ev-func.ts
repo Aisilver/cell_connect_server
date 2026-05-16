@@ -26,8 +26,6 @@ export async function MeetCTRL_EV_bookedMeeting(meetingId: number) {
     if(cellMembers.length < 1) return
 
     for (const member of cellMembers) {
-        const {firstName, email} = member.account.user
-
-        await MeetCtrlMailService.sendMeetingBookedMail(firstName, email, meetingFromDB)
+        await MeetCtrlMailService.sendMeetingBookedMail(member.account.user, meetingFromDB)
     }
 }

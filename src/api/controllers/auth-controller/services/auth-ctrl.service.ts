@@ -34,11 +34,11 @@ class AuthCtrlServiceMain {
     }
 
     async setResponseRefeshTokenAndGetAccessToken (res: Response, payload: ApiJWTPayload) {
-        const { userId } = payload,
+        const {userId, accountId} = payload,
         
-        newAccessToken = this.jwtConfig.generateAccessToken(payload),
+        newAccessToken = this.jwtConfig.generateAccessToken({userId, accountId}),
     
-        newRefreshToken = this.jwtConfig.generateRefreshToken(payload)
+        newRefreshToken = this.jwtConfig.generateRefreshToken({userId, accountId})
     
         await AuthCtrlCacheService.deleteUserRefreshToken(userId)
 

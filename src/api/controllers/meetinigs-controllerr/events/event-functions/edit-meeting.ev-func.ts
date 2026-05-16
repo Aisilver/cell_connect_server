@@ -50,7 +50,21 @@ export async function MeetCTRL_EV_editedMeeting(param: MeetingEditEventParam) {
 
     if(cellMembers.length < 1) return
 
-    const emails = cellMembers.map(mem => mem.account.user.email)
+    const {cell} = await MeetingEntityRepo.findOneOrFail(
+        {
+            where: {
+                id: Equal(meetingId)
+            },
 
-    await MeetCtrlMailService.sendMeetingEditMail(emails, editLog, newMeeting)
+            select: {id: true},
+
+            relations: {
+                cell: true
+            }
+        }
+    )
+
+    for (const member of cellMembers) {
+        await MeetCtrlMailService.sendMeetingEditMail(member.account.user, meetingId, cell.name)
+    }
 }

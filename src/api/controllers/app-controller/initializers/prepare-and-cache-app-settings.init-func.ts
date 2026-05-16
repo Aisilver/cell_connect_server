@@ -3,11 +3,13 @@ import { APP_DEFAULT_SETTINGS_CONSTANT } from "../../../../constants/app-default
 import { MiscellaneousEntitiesRepoManagerService } from "../../../../datasources/miscellaneous-entites-ds/repos-manager";
 import { AppSettings } from "@shared/entities";
 import { Equal } from "typeorm";
-import { getNonExistingKeyAndValueOfSource, HasDifferentKeys } from "../../../../functions/objects-has-different-keys.func";
+import { ValueComparer } from "../../../../classes/value-compare/value-compare.class";
 
 const { AppSettingsRepo } = MiscellaneousEntitiesRepoManagerService.JSONsRepoManager,
 
-{ CACHED_APP_SETTINGS } = ServerMainService
+{ CACHED_APP_SETTINGS } = ServerMainService,
+
+valueComparer = new ValueComparer()
 
 export async function APP_R_Init_prepareAndCacheAppSettings () {
     let settingsInUse: AppSettings | any = {},
@@ -23,7 +25,7 @@ export async function APP_R_Init_prepareAndCacheAppSettings () {
             settingsInUse[key] = body 
             
             //@ts-ignore
-            if(HasDifferentKeys(APP_DEFAULT_SETTINGS_CONSTANT[key], body))
+            if(valueComparer.hasDifferentKeys(APP_DEFAULT_SETTINGS_CONSTANT[key], body))
                 //@ts-ignore
                 settingsKeyWithdifferentObjectKeys.push(key)
             
@@ -39,7 +41,7 @@ export async function APP_R_Init_prepareAndCacheAppSettings () {
     for (const key of settingsKeyWithdifferentObjectKeys) {
         const target = settingsInUse[key],
 
-        nonExistantKeyAndValue = getNonExistingKeyAndValueOfSource(target, APP_DEFAULT_SETTINGS_CONSTANT[key])
+        nonExistantKeyAndValue = valueComparer.getNonExistingKeyAndValueOfSource(target, APP_DEFAULT_SETTINGS_CONSTANT[key])
 
         if(!nonExistantKeyAndValue) continue 
 
