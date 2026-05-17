@@ -29,7 +29,8 @@ export async function MeetCTRL_RF_getUpcomingMeetingByCellId (req: Request, res:
                         },
                         editLogs: true,
                         venue: true,
-                        cell: true
+                        cell: true,
+                        agendas: true
                     }
                 })
             }
