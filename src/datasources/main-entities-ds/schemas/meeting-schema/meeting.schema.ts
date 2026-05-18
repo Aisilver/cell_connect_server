@@ -27,6 +27,12 @@ export class MeetingEntity extends BaseEntity implements Meeting {
     @Column({transformer: Utc_Transformer})
     declare endTime: Date;
 
+    @Column({ nullable: true, transformer: Utc_Transformer })
+    declare actualStartTime?: Date;
+
+    @Column({ nullable: true, transformer: Utc_Transformer })
+    declare actualEndTime?: Date;
+
     @Column()
     declare rating: number;
 
