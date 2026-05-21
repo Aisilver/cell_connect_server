@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { APIFailResponse, APIResponse } from "../../../functions/api-response.func";
-import Joi from "joi";
 import { MainEntitiesRepoManagerService } from "../../../../datasources/main-entities-ds/repos-manger";
 import { Equal, In, Not } from "typeorm";
 import { ExpressRequestJWTPayloadExtractor } from "../../../functions/express-request-jwt-payload-extractor.func";
 import { ToBoolean } from "../../../../functions/to-boolean.func";
-import { MeetingAttendantsRequestQuery } from "@shared/route-types";
 import { PaginateFindAndCountData } from "../../../../functions/paginateFindAndCount.func";
+import { IdValidator } from "../../../validators/id-validator.vldtr";
+import { GetMeetingAttendantsRouteQuery } from "@shared/route-types";
 
 const {AttendanceEntityRepo} = MainEntitiesRepoManagerService
 
@@ -19,9 +19,9 @@ export async function MeetCTRL_RF_getMeetingAttendants (req: Request, res: Respo
         
         const {accountId} = jwtPayload,
         
-        {exclude_user, limit, exclude_absent, exclude_leader} = req.query as MeetingAttendantsRequestQuery,
+        {exclude_user, limit, exclude_leader} = req.query as GetMeetingAttendantsRouteQuery,
         
-        {error, value: meetingId} = Joi.number().not(0).required().validate(req.params['meetingId'])
+        {error, value: meetingId} = IdValidator(req.params['meetingId'])
 
         if(error) throw error
 
@@ -38,10 +38,6 @@ export async function MeetCTRL_RF_getMeetingAttendants (req: Request, res: Respo
                         account: {
                             id: Not(accountId)
                         }
-                    }),
-                    
-                    ...(ToBoolean(exclude_absent) && {
-                        status: Not("absent")
                     })
                 },
 

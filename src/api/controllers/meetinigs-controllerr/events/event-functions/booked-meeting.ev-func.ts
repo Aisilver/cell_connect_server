@@ -12,9 +12,6 @@ export async function MeetCTRL_EV_bookedMeeting(meetingId: number) {
                 id: Equal(meetingId)
             },
             relations: {
-                host: {
-                    user: true,
-                },
                 venue: true,
                 cell: true
             }

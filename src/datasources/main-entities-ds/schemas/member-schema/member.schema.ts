@@ -1,10 +1,11 @@
-import { CellPermission, Member, MemberRoleTypes, MemberStatusTypes, Suspension } from "@shared/entities";
+import { Attendance, CellPermission, Member, MemberRoleTypes, MemberStatusTypes } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { CellEntity } from "../cell-schema/cell.schema";
 import { UserAccountEntity } from "../user-account-schema/user-account.schema";
 import { CellPermissionEntity } from "../cell-permission-schema/cell-permission.schema";
 import { MemberSuspensionEntity } from "../suspension-schema/suspension.schema";
+import { AttendanceEntity } from "../attendance-schema/attendance.schema";
 
 @Entity("members")
 export class MemberEntity extends BaseEntity implements Member {
@@ -21,17 +22,20 @@ export class MemberEntity extends BaseEntity implements Member {
     @JoinColumn()
     declare account: UserAccountEntity;
 
-    @ManyToOne(() => CellEntity, cell => cell.members, {
-        onDelete: "CASCADE"
-    })
-    @JoinColumn()
-    declare cell: CellEntity;
-
     @OneToOne(() => CellPermissionEntity, {
         nullable: true
     })
     @JoinColumn()
     declare cell_permission?: CellPermission;
+
+    @OneToMany(() => AttendanceEntity, attd => attd.membership)
+    declare attendances?: AttendanceEntity[];
+
+    @ManyToOne(() => CellEntity, cell => cell.members, {
+        onDelete: "CASCADE"
+    })
+    @JoinColumn()
+    declare cell: CellEntity;
 
     @OneToOne(() => MemberSuspensionEntity, {
         nullable: true,
@@ -41,5 +45,5 @@ export class MemberEntity extends BaseEntity implements Member {
     declare suspension?: MemberSuspensionEntity;
 
     @OneToMany(() => MemberSuspensionEntity, sus => sus.member)
-    declare suspensions?: MemberSuspensionEntity[];
+    declare suspensions: MemberSuspensionEntity[];
 }

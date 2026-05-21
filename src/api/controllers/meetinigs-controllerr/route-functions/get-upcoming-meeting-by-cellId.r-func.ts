@@ -5,6 +5,7 @@ import { MainEntitiesRepoManagerService } from "../../../../datasources/main-ent
 import { In, Not } from "typeorm";
 import { MeetingStatusTypes } from "@shared/entities";
 import { ToBoolean } from "../../../../functions/to-boolean.func";
+import { GetUpcomingMeetingRouteQuery } from "@shared/route-types/meetings-route/queries.types";
 
 const {MeetingEntityRepo} = MainEntitiesRepoManagerService
 
@@ -12,7 +13,12 @@ export async function MeetCTRL_RF_getUpcomingMeetingByCellId (req: Request, res:
     try {
         const {error, value: Cell_Id} = Joi.number().not(0).required().validate(req.params['cellId']),
 
-        {flat} = req.query as {flat?: boolean}
+        {
+            inc_agendas,
+            inc_cell,
+            inc_editlogs,
+            inc_venue
+        } = req.query as GetUpcomingMeetingRouteQuery
 
         if(error) throw error
 
@@ -22,17 +28,9 @@ export async function MeetCTRL_RF_getUpcomingMeetingByCellId (req: Request, res:
                     cell: {id: Cell_Id},
                     status: Not(In<MeetingStatusTypes>(['canceled', 'concluded', 'not-hosted']))
                 },
-                ...(!ToBoolean(flat) && {
-                    relations: {
-                        host: {
-                            profile_image: true
-                        },
-                        editLogs: true,
-                        venue: true,
-                        cell: true,
-                        agendas: true
-                    }
-                })
+                relations: {
+
+                }
             }
         )
 

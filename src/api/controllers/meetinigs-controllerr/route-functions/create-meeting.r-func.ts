@@ -36,7 +36,7 @@ export async function MeetCTRL_RF_createMeeting (req: Request, res: Response) {
                 venue: {id: Number(NewMeeting.venue?.id)}
             }),
 
-            host: {id: accountId}
+            booker: {id: accountId}
         })
 
         const savedMeeting = await MeetingEntityRepo.save(meetingToSave),

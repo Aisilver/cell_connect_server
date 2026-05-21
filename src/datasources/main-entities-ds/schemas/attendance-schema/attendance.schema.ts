@@ -1,8 +1,9 @@
-import { Attendance, AttendanceStatusTypes } from "@shared/entities";
+import { Attendance, AttendancePuntualityTypes, Member } from "@shared/entities";
 import { BaseEntity } from "../../../classes/base-entity.schema";
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { UserAccountEntity } from "../user-account-schema/user-account.schema";
 import { MeetingEntity } from "../meeting-schema/meeting.schema";
+import { MemberEntity } from "../member-schema/member.schema";
 
 @Entity("attendances")
 export class AttendanceEntity extends BaseEntity implements Attendance {
@@ -10,27 +11,37 @@ export class AttendanceEntity extends BaseEntity implements Attendance {
     @Column()
     declare isLeader: boolean;
     
-    @Column({nullable: true})
-    arrivalTime?: Date;
-    
-    @Column({nullable: true})
-    departureTime?: Date;
-    
     @Column()
     declare valid: boolean;
 
     @Column()
-    declare status: AttendanceStatusTypes;
+    declare puntuality: AttendancePuntualityTypes;
     
+    @Column({nullable: true})
+    declare departureTime?: Date;
+    
+    @Column({nullable: true})
+    declare validatedAt?: Date;
+    
+    @OneToOne(() => UserAccountEntity, {nullable: true})
+    @JoinColumn()
+    declare validator?: UserAccountEntity;
+
     @ManyToOne(() => UserAccountEntity, {
         onDelete: "CASCADE"
     })
     @JoinColumn()
-    account: UserAccountEntity;
-    
+    declare account: UserAccountEntity;
+
+    @ManyToOne(() => MemberEntity, {
+        onDelete: "CASCADE"
+    })
+    @JoinColumn()
+    declare membership: MemberEntity;
+
     @ManyToOne(() => MeetingEntity, {
         onDelete: "CASCADE"
     })
     @JoinColumn()
-    meeting: MeetingEntity;
+    declare meeting: MeetingEntity;
 }

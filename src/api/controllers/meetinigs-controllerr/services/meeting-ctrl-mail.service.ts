@@ -19,25 +19,25 @@ class MeetingControllerMailService extends BaseEmailManager {
     sendMeetingBookedMail (recipent: User, bookedMeeting: MeetingEntity) {
         const {firstName, email, timezone: recepientTimezone} = recipent,
         
-        {cell, title, venue, type, host} = bookedMeeting,
+        {cell, title, venue, type,} = bookedMeeting,
 
         startTime = new Date(bookedMeeting.startTime),
 
-        {timezone: hostTimeZone} = host.user,
+        {timezone: cellTimeZone} = cell,
 
         {LOGO, BOOK_MEETING_BANNER} = EmailImagePathsConfiguration,
 
-        HostAndRecipentIsInTheSameTimeZone = this.valueComparer.sameString(hostTimeZone, recepientTimezone),
+        HostAndRecipentIsInTheSameTimeZone = this.valueComparer.sameString(cellTimeZone, recepientTimezone),
 
         meetingStartDateStr = Intl.DateTimeFormat("en-US", {
-            timeZone: hostTimeZone,
+            timeZone: cellTimeZone,
             day: "numeric",
             month: "short",
             year: "numeric"
         }).format(startTime),
 
         meetingStartTimeStr = Intl.DateTimeFormat("en-US", {
-            timeZone: hostTimeZone,
+            timeZone: cellTimeZone,
             hour: "numeric",
             minute: "2-digit",
             hour12: true
@@ -73,7 +73,7 @@ class MeetingControllerMailService extends BaseEmailManager {
 
                     MEETING_TIME: meetingStartTimeStr, 
 
-                    HOST_TIME_ZONE: hostTimeZone,
+                    HOST_TIME_ZONE: cellTimeZone,
 
                     ...(HostAndRecipentIsInTheSameTimeZone && {
                         RECIPENT_LOCAL_MEETING_TIME_IS_HIDDEN: this.HIDDEN_ELEMENT_CSS_STYLE

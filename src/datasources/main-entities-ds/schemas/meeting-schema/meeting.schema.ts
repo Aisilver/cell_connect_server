@@ -41,7 +41,7 @@ export class MeetingEntity extends BaseEntity implements Meeting {
 
     @OneToOne(() => UserAccountEntity)
     @JoinColumn()
-    declare host: UserAccountEntity;
+    declare booker?: UserAccountEntity;
 
     @OneToOne(() => CellVenueLocationEntity, {
         cascade: true,

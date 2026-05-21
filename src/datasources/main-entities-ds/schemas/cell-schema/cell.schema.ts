@@ -25,6 +25,9 @@ export class CellEntity extends BaseEntity implements Cell {
     @Column()
     declare rating: number;
 
+    @Column()
+    declare timezone: string;
+
     @OneToOne(() => CellVenueLocationEntity,{
         cascade: true,
         eager: true

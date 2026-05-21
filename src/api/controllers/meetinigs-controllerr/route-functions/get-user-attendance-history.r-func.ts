@@ -5,6 +5,7 @@ import { ExpressRequestJWTPayloadExtractor } from "../../../functions/express-re
 import { PaginatedData, Pagination } from "@shared/common";
 import { Attendance } from "@shared/entities";
 import { PaginateFindAndCountData } from "../../../../functions/paginateFindAndCount.func";
+import { PaginationParamValidator } from "../../../validators/pagination-param-validator.vldtr";
 
 const {AttendanceEntityRepo} = MainEntitiesRepoManagerService
 
@@ -16,12 +17,11 @@ export async function MeetCTRL_RF_getUserAttendanceHistory (req: Request, res: R
         
         const {accountId} = payload,
 
-        //@ts-ignore
-        pagination = req.query as Pagination,
+        {error, value: pagination} = PaginationParamValidator(req.query)
 
-        page = Number(pagination.page),
+        if(error) throw error
 
-        limit = Number(pagination.limit),
+        const {limit, page} = pagination,
 
         skip = (Number(page) - 1) * Number(limit),
         
@@ -35,11 +35,13 @@ export async function MeetCTRL_RF_getUserAttendanceHistory (req: Request, res: R
                 take: limit,
                 relations: {
                     meeting: {
-                        host: {
-                            user: true,
-                            profile_image: true
+                        cell: {
+                            leader: {
+                                account: {
+                                    profile_image: true
+                                }
+                            }
                         },
-                        cell: true,
                         venue: true
                     }
                 }
