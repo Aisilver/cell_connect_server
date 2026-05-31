@@ -16,7 +16,7 @@ class AuthCtrlServiceMain {
         
         if (!cookieRefreshToken) throw Error("no refresh token found in cookie")    
             
-        const payload = await  this.jwtConfig.verifyToken(cookieRefreshToken, 'refresh'),
+        const payload = await this.jwtConfig.verifyToken(cookieRefreshToken, 'refresh'),
         
         {userId} = payload,
         

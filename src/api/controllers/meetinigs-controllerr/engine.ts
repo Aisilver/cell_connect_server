@@ -1,19 +1,17 @@
 import { ControllerEngine } from "../../classes/controller-engine.class";
 import { MeetCTRL_RF_getMeetingAttendants } from "./route-functions/get-meeting-attendants.r-func";
-import { MeetCTRL_RF_getUserAttendanceHistory } from "./route-functions/get-user-attendance-history.r-func";
 import { MeetCTRL_RF_getUpcomingMeetingByCellId } from "./route-functions/get-upcoming-meeting-by-cellId.r-func";
 import { MeetCTRL_RF_createMeeting } from "./route-functions/create-meeting.r-func";
 import { MeetCTRL_RF_getMeetingDefaultVenue } from "./route-functions/get-meeting-default-venue.r-func";
 import { MeetCTRL_RF_editMeeting } from "./route-functions/edit-meeting.r-func";
 import { MeetCTRL_RF_bookAMeetingValidator } from "./route-functions/book-a-meeting-validator.r-func";
 import { MeetCTRL_RF_editAMeetingValidator } from "./route-functions/edit-a-meeting-validator.r-func";
+import { MeetCTRL_RF_getUserCellAttendance } from "./route-functions/get-cell-attendace-history.r-func";
 
 class MeetingsAPIRouteController extends ControllerEngine {
     protected routeBaseUrl: string = "meetings";
 
     BeforeInitialise(): void | Promise<void> {
-        this.router.route("/get-user-attds-history").get(MeetCTRL_RF_getUserAttendanceHistory)   
-
         this.router.route("/get-upcoming-meet/:cellId").get(MeetCTRL_RF_getUpcomingMeetingByCellId)
 
         this.router.route("/get-meet-attendants/:meetingId").get(MeetCTRL_RF_getMeetingAttendants)
@@ -27,6 +25,8 @@ class MeetingsAPIRouteController extends ControllerEngine {
         this.router.route("/edit-meeting/:meetingId").put(MeetCTRL_RF_editMeeting)
 
         this.router.route("/edit-a-meeting-validator").get(MeetCTRL_RF_editAMeetingValidator)
+
+        this.router.route("/get-cell-attendance-history/:memberId").get(MeetCTRL_RF_getUserCellAttendance)
     }
 }
 

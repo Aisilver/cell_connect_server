@@ -4,6 +4,7 @@ import Joi from "joi";
 export function PaginationParamValidator (data?: any) {
     return Joi.object<Pagination>({
         page: Joi.number().required(),
+        
         limit: Joi.number().required()
     })
 

@@ -30,6 +30,8 @@ export async function AuthCTRL_RF_initializeUser (req: Request, res: Response) {
     res.json(APIResponse<UserSignInResponse>({account: account, accessToken: newAccessToken}))
 
   } catch (error: any) {
+    console.log(error.message)
+    
     res.json(APIFailResponse(error.message))
   }  
 }
