@@ -1,12 +1,12 @@
 import cors from 'cors'
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser';
+import { config } from "dotenv";
 import { CarrierEngine } from "../classes/carrier-engine/carrier-engine.class";
 import { Engine } from "../classes/engine/engine.class";
 import { UsersRouteController } from "./controllers/users-controller/engine";
-import { config } from "dotenv";
 import { AuthRouteController } from "./controllers/auth-controller/engine";
-import { MainRoute_encryptionRegistery } from "./route-functions/encryption-registry.r-func";
+import { MainRoute_encryptionRegistery } from "./base-route-functions/encryption-registry.r-func";
 import { APIResponse } from "./functions/api-response.func";
 import { MeetingsRouteController } from "./controllers/meetinigs-controllerr/engine";
 import { PagesRouteController } from "./controllers/pages-controller/engine";
@@ -14,7 +14,7 @@ import { MediaRouteController } from "./controllers/media-controller/engine";
 import { AppRouteController } from "./controllers/app-controller/engine";
 import { WebHookRouteController } from "./controllers/web-hook-controller/engine";
 import { ServerSideEventsRouteController } from './controllers/server-side-events-controller/engine';
-import { MainRoute_getAppSettings } from './route-functions/get-app-settings.r-func';
+import { MainRoute_getAppSettings } from './base-route-functions/get-app-settings.r-func';
 
 config()
 
