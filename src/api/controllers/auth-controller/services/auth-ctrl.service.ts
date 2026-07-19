@@ -73,7 +73,8 @@ class AuthCtrlServiceMain {
               suspension: true,
 
               cell_permission: true
-            }
+            },
+            suspension: true
           }
         }
     }

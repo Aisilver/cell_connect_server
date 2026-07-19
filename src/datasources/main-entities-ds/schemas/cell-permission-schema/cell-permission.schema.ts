@@ -14,13 +14,16 @@ export class CellPermissionEntity extends BaseEntity implements CellPermission {
     
     @Column({type: "jsonb"})
     declare meeting_hub_permissions: { 
-        hub_permissions: { 
+        hub_permissions: {
             canStartMeeting: boolean; 
             canEndMeeting: boolean; 
             canViewAnalytics: boolean;
             canEditAgenda: boolean; 
-        }; 
-        hub_members_permissions: { 
+        };
+
+        broadcast_permissions: BasePermission;
+        
+        members_permissions: { 
             attendance_permissions: { 
                 canRecordAttendance: boolean; 
             }; 
@@ -32,8 +35,4 @@ export class CellPermissionEntity extends BaseEntity implements CellPermission {
 
     @Column({ type: "jsonb" })
     declare member_permissions: BasePermission;
-
-    @Column({type: "jsonb"})
-    declare meeting_hub_broadcast_permissions: BasePermission;
-
 }
