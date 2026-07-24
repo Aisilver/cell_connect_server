@@ -14,8 +14,6 @@ export class UserAccountEntitySchemaValidator extends SchemaValidator <UserAccou
         online_status: Joi.string().allow('online', 'offine').required(),
         
         banned: Joi.boolean().required(),
-        
-        suspended: Joi.boolean().required(),
             
         createdAt: Joi.date().optional(),
         
