@@ -14,8 +14,7 @@ export class LeaderEntity extends BaseEntity implements Leader {
     declare status: LeaderStatutsTypes;
 
     @OneToOne(() => CellPermissionEntity, {
-        cascade: true,
-        eager: true
+        cascade: true
     })
     @JoinColumn()
     declare cell_permission: CellPermissionEntity;
