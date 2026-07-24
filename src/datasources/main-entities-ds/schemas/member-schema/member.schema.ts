@@ -22,7 +22,9 @@ export class MemberEntity extends BaseEntity implements Member {
     @JoinColumn()
     declare account: UserAccountEntity;
 
-    @OneToOne(() => CellPermissionEntity)
+    @OneToOne(() => CellPermissionEntity, {
+        cascade: true
+    })
     @JoinColumn()
     declare cell_permission: CellPermission;
 
