@@ -63,7 +63,7 @@ class AuthCtrlServiceMain {
                 suspension: true
               },
               
-              cell_permission: true
+              // cell_permission: true
             },
             currentMembership: {
               cell: {
@@ -72,7 +72,7 @@ class AuthCtrlServiceMain {
               
               suspension: true,
 
-              cell_permission: true
+              // cell_permission: true
             },
             suspension: true
           }
