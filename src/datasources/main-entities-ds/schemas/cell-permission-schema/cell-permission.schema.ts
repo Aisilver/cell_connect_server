@@ -5,12 +5,11 @@ import { Column, Entity } from "typeorm";
 
 @Entity("cell-permissions")
 export class CellPermissionEntity extends BaseEntity implements CellPermission {
-    @Column({type: "jsonb"})
-    declare cell_permissions: { 
-        canPostAnnouncements: boolean; 
-        canViewAnalytics: boolean; 
-        canCheckIn: boolean; 
-    };
+    @Column()
+    declare canPostAnnouncements: boolean;
+    
+    @Column()
+    declare canViewAnalytics: boolean;
     
     @Column({type: "jsonb"})
     declare meeting_hub_permissions: { 
