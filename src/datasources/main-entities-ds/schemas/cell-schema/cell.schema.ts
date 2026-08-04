@@ -6,6 +6,7 @@ import { MeetingEntity } from "../meeting-schema/meeting.schema";
 import { MemberEntity } from "../member-schema/member.schema";
 import { CellVenueLocationEntity } from "../app-location-schema/app-location.schema";
 import { CellSuspensionEntity } from "../suspension-schema/suspension.schema";
+import { OfflineMemberEntity } from "../offline-member-schema/offline-member.schema";
 
 @Entity("cells")
 export class CellEntity extends BaseEntity implements Cell {
@@ -49,6 +50,9 @@ export class CellEntity extends BaseEntity implements Cell {
 
     @OneToMany(() => MemberEntity, member => member.cell)
     declare members: MemberEntity[]
+
+    @OneToMany(() => OfflineMemberEntity, off_member => off_member.cell)
+    declare offlineMembers: OfflineMemberEntity[]
 
     @OneToMany(() => MeetingEntity, meet => meet.cell)
     declare meetings: MeetingEntity[]

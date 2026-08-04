@@ -10,6 +10,7 @@ import { MeetingAgendaEntity } from "./schemas/meeting-agenda-schema/meeting-age
 import { MeetingEditLogEntity } from "./schemas/meeting-edit-log-schema/meeting-edit-log.schema";
 import { MeetingEntity } from "./schemas/meeting-schema/meeting.schema";
 import { MemberEntity } from "./schemas/member-schema/member.schema";
+import { OfflineMemberEntity } from "./schemas/offline-member-schema/offline-member.schema";
 import { ReviewEntity } from "./schemas/review-schema/review.schema";
 import { AccountSuspensionEntity, CellSuspensionEntity, MemberSuspensionEntity, SuspensionEntity } from "./schemas/suspension-schema/suspension.schema";
 import { UserAccountEntity } from "./schemas/user-account-schema/user-account.schema";
@@ -31,6 +32,7 @@ export const MainEntitiesList = [
     MeetingEditLogEntity,
     LeaderEntity,
     MemberEntity,
+    OfflineMemberEntity,
     ReviewEntity,
     AttendanceEntity,
     SuspensionEntity,

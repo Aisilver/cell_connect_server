@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm"
-import { User } from "@shared/entities"
+import { User, UserGenderTypes, UserMaritalStatuses } from "@shared/entities"
 import { BaseEntity } from "../../../classes/base-entity.schema";
 import { AccountBaseEntity } from "../account-base-schema/account-base.schema";
 import { UserLocationEntity } from "../app-location-schema/app-location.schema";
@@ -27,10 +27,10 @@ export class UserEntity extends BaseEntity implements User {
     declare password: string
 
     @Column()
-    declare gender: string
+    declare gender: UserGenderTypes
 
     @Column()
-    declare maritalStatus: string
+    declare maritalStatus: UserMaritalStatuses
     
     @Column()
     declare DOB: Date;

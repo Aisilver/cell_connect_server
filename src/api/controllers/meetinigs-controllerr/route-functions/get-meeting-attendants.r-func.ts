@@ -46,9 +46,13 @@ export async function MeetCTRL_RF_getMeetingAttendants (req: Request, res: Respo
                 }),
                 
                 relations: {
-                    account: {
-                        user: true
-                    }
+                    membership: {
+                        account: {
+                            user: true,
+                            profile_image: true
+                        }
+                    },
+                    offlineMembership: true
                 }
             }
         )

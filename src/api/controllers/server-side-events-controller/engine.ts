@@ -1,19 +1,22 @@
-import Joi from "joi";
 import { ControllerEngine } from "../../classes/controller-engine.class";
 import { APIResponseEncrypter } from "../../functions/api-response-encrypter.func";
 import { APIResponse } from "../../functions/api-response.func";
-import { API_HEADER_KEY_NAMES_CONSTANT } from "../../../constants/api-header-key-names.constant";
 import { ServerMainService } from "../../../services/server.service";
 import { SystemNotificationSubscription } from "../../../subscriptions/system-notification.subscription";
 import { ServerSideEventsCTRLEventsManager } from "./events/server-side-events-ctrl-route-events.service";
 import { addMinutes } from "date-fns";
 import { DynamicKeyTaskManager } from "../../../classes/dynamic-key-task-manager/dynamic-key-task-manager.class";
 import { ClientAcvtivityEntryData } from "./types";
+import { IdValidator } from "../../validators/id-validator.vldtr";
+import { API_COOKIE_KEY_NAMES_CONSTANT } from "../../../constants/api-cookie-key-names.contant";
+import Joi from "joi";
+import { JWTConfigurator } from "../../classes/jwt-configurator.class";
 
-const {CLIENT_ID} = API_HEADER_KEY_NAMES_CONSTANT
-
+const {REFRESH_TOKEN_KEY} = API_COOKIE_KEY_NAMES_CONSTANT
 class ServerSideEventsAPIRouteController extends ControllerEngine {
     protected routeBaseUrl: string = "notifications";
+
+    private jwtConfig = new JWTConfigurator()
 
     private inAppInactiveUsersTaskManager = new DynamicKeyTaskManager("inactive-users-processor-task", this.accountInactiveTask)
 
@@ -28,15 +31,17 @@ class ServerSideEventsAPIRouteController extends ControllerEngine {
             next()
         })
 
-        this.router.route("/:accountId").get(async (req, res) => {
+        this.router.route("/").get(async (req, res) => {
             try {
-                const {error, value: accountId} = Joi.number().not(0).validate(req.params['accountId'])
+                const {error: clientIdValErr, value: clientID} = Joi.string().not("").required().validate(req.query['clid'])
 
-                if(error) throw error
+                if(clientIdValErr) throw Error(`CLI_ERR: ${clientIdValErr.message}`)
 
-                const clientID = req.get(CLIENT_ID)
+                const refreshToken = req.cookies[REFRESH_TOKEN_KEY]
 
-                if(!clientID) throw Error("client id was not provided")
+                if(!refreshToken) throw Error("no refresh token found")
+
+                const {accountId} = await this.jwtConfig.verifyToken(refreshToken, "refresh")
 
                 const clientPublicEncryptionKey = await ServerMainService.getClientResponseEncryptionPublic64Key(clientID)
 
@@ -67,6 +72,4 @@ class ServerSideEventsAPIRouteController extends ControllerEngine {
     }
 }
 
-export const ServerSideEventsRouteController = new ServerSideEventsAPIRouteController("ControllerEngine: ServerSideEventsRouteController", {
-    useJWTMiddleware: true
-})
+export const ServerSideEventsRouteController = new ServerSideEventsAPIRouteController("ControllerEngine: ServerSideEventsRouteController")

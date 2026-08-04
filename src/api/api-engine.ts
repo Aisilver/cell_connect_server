@@ -15,6 +15,7 @@ import { AppRouteController } from "./controllers/app-controller/engine";
 import { WebHookRouteController } from "./controllers/web-hook-controller/engine";
 import { ServerSideEventsRouteController } from './controllers/server-side-events-controller/engine';
 import { MainRoute_getAppSettings } from './base-route-functions/get-app-settings.r-func';
+import { WebSocketController } from './controllers/web-socket-controller/engine';
 
 config()
 
@@ -29,7 +30,8 @@ class APIEngineMain extends CarrierEngine {
         MeetingsRouteController,
         MediaRouteController,
         WebHookRouteController,
-        ServerSideEventsRouteController
+        ServerSideEventsRouteController,
+        WebSocketController
     ];
 
     BeforeInitialise(): void | Promise<void> {
